@@ -53,6 +53,7 @@ async function runPy(code, stdin){
   catch(e){ return {ok:false, out, err: explain(e.message)}; }
   finally { try { ns.destroy(); } catch(e){} }
 }
+window.ppRunPy = runPy;
 const HARNESS = String.raw`
 import json as __j
 __r = []
