@@ -51,7 +51,7 @@ lab({id:"pc", tr:"base", area:"hw", title:"Dentro do computador",
     await wait(ms+40); pkt.style.opacity=0;
   }
   function glow(p, cls="active"){ const el=q(board,".p-"+p); el.classList.add(cls); labLater(()=>el.classList.remove(cls), 700); }
-  const free = () => ram.reduce((n,x,i)=>n+(x?0:1),0);
+  const free = () => N - ram.filter(Boolean).length;
   function alloc(a,n){ for(let i=0;i<N&&n>0;i++) if(!ram[i]){ ram[i]=a; n--; } }
   function freeApp(a){ ram=ram.map(x=>x===a?null:x); }
   async function openApp(a){
