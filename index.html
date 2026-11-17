@@ -6,157 +6,256 @@
 <title>Projeto Perfeição</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F3F4EF; --surface:#FFFFFF; --ink:#18202B; --muted:#5B6573; --line:#DADDD5;
-  --accent:#2747C7; --accent-soft:#E4E9FB; --mark:#F7DC5A; --ok:#1F7A4D; --warn:#B45309;
-  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
-  --r:10px;
-  color-scheme: light;
+  --paper:#F2F3EE; --surface:#FFFFFF; --ink:#141B26; --muted:#5A6472; --line:#D9DCD3; --grid:rgba(39,71,199,.06);
+  --accent:#2747C7; --accent-soft:#E3E8FB; --mark:#F5D547; --ok:#1F7A4D; --warn:#C2410C;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"Source Sans 3","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:14px; --shadow:0 1px 0 rgba(20,27,38,.04),0 8px 24px -16px rgba(20,27,38,.25);
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0F131A; --surface:#171C25; --ink:#E8EAEE; --muted:#9AA3B2; --line:#2A3140;
-    --accent:#8AA2FF; --accent-soft:#1E2742; --mark:#8C7516; --ok:#4CC38A; --warn:#F0A04B;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F131A; --surface:#171C25; --ink:#E8EAEE; --muted:#9AA3B2; --line:#2A3140;
-  --accent:#8AA2FF; --accent-soft:#1E2742; --mark:#8C7516; --ok:#4CC38A; --warn:#F0A04B;
-  color-scheme: dark;
-}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
-a{color:var(--accent)}
-h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
-h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.01em}
-h2{font-size:24px;font-weight:700}
-h3{font-size:18px;font-weight:700}
-p{margin:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0E1219;--surface:#161B24;--ink:#E9EBF0;--muted:#9AA3B2;--line:#283041;--grid:rgba(138,162,255,.05);--accent:#8AA2FF;--accent-soft:#1D2742;--mark:#E2C23A;--ok:#4CC38A;--warn:#F59E5B;--shadow:0 8px 24px -16px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0E1219;--surface:#161B24;--ink:#E9EBF0;--muted:#9AA3B2;--line:#283041;--grid:rgba(138,162,255,.05);--accent:#8AA2FF;--accent-soft:#1D2742;--mark:#E2C23A;--ok:#4CC38A;--warn:#F59E5B;--shadow:0 8px 24px -16px rgba(0,0,0,.6);color-scheme:dark}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+a{color:var(--accent);text-underline-offset:3px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.4vw,48px);font-weight:800;letter-spacing:-.02em}
+.h1s{font-size:clamp(26px,3.4vw,36px)} h2{font-size:22px;font-weight:700} p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-header.top{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
-.topbar{display:flex;align-items:center;gap:16px;padding:12px 0;flex-wrap:wrap}
-.brand{font-family:var(--display);font-weight:800;font-size:20px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
-.brand i{width:14px;height:14px;background:var(--accent);border-radius:3px;display:inline-block;box-shadow:4px 4px 0 var(--mark)}
-nav.tabs{display:flex;gap:4px;flex-wrap:wrap;flex:1}
-nav.tabs a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:15px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono)}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:14px;padding:10px 0}
+.brand{font-family:var(--display);font-weight:800;font-size:19px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:9px;white-space:nowrap}
+.brand i{width:14px;height:14px;background:var(--accent);border-radius:4px;box-shadow:4px 4px 0 var(--mark)}
+nav.tabs{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;white-space:nowrap}
 nav.tabs a:hover{color:var(--ink);background:var(--accent-soft)}
 nav.tabs a[aria-current="page"]{background:var(--ink);color:var(--paper)}
 .sync{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
-.sync b{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.sync b{width:9px;height:9px;border-radius:50%;background:var(--muted)}
 .sync.cloud b{background:var(--ok)} .sync.busy b{background:var(--warn)}
-main{padding:28px 0 80px}
+@media (max-width:760px){.sync span{display:none}.brand span{display:none}}
+main{padding:30px 0 90px}
 .grid{display:grid;gap:16px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
-.muted{color:var(--muted)}
-.small{font-size:14px}
-.lead{font-size:19px;max-width:65ch;color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.cardhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.muted{color:var(--muted)} .small{font-size:14px}
+.lead{font-size:19px;max-width:62ch;color:var(--muted)}
+.tw{max-width:70ch;margin-top:8px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pagehead{display:grid;gap:10px}
+.sec{margin-top:28px}
+.row{display:flex;gap:10px;align-items:center} .row.wrap,.wrap.row{flex-wrap:wrap}
+.hero{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.herotxt,.heroring{position:relative;z-index:1}.herotxt{display:grid;gap:14px}
+.heroring{display:grid;justify-items:center;gap:6px}
+.herobtns{display:flex;gap:10px;flex-wrap:wrap}
+.ring .ringtxt{font-family:var(--display);font-weight:800;font-size:28px;fill:var(--ink)}
+@media (max-width:700px){.hero{grid-template-columns:1fr;padding:22px}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
 .stat .n{font-family:var(--display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.stat .of{font-size:18px;color:var(--muted);font-weight:600}
 .stat .l{font-size:14px;color:var(--muted);margin-top:6px}
-.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-.bar>span{display:block;height:100%;background:var(--accent);border-radius:99px}
-.two{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
-@media (max-width:860px){.two{grid-template-columns:1fr}}
-.trow{display:grid;grid-template-columns:34px 1fr 54px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);text-decoration:none;color:inherit}
-.trow:last-child{border-bottom:0}
-.trow:hover .tname{color:var(--accent)}
-.num{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.bar.thin{height:5px;margin-top:5px}
+.bar>span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.two-even{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media (max-width:860px){.two,.two-even{grid-template-columns:1fr}}
+.trow{display:grid;grid-template-columns:36px 1fr 52px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);text-decoration:none;color:inherit}
+.trow:last-child{border-bottom:0}.trow:hover .tname{color:var(--accent)}
+.tnum{font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;background:var(--tc);border-radius:7px;padding:3px 0;text-align:center;width:30px}
 .pct{font-family:var(--mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
 .tname{font-weight:600;font-size:15px}
-.chk{display:flex;gap:12px;align-items:flex-start}
-.chk input{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:6px;margin:2px 0 0;cursor:pointer;display:grid;place-content:center;background:var(--surface)}
-.chk input:checked{background:var(--ok);border-color:var(--ok)}
-.chk input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
-.done-title{background:linear-gradient(transparent 55%,var(--mark) 55%);}
-.next li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line)}
-.next{padding:0;margin:0}
-.next li:last-child{border-bottom:0}
-.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
-.pill.g{background:transparent;border:1px solid var(--ok);color:var(--ok)}
-.pill.p{background:transparent;border:1px solid var(--warn);color:var(--warn)}
+.chk{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.chk.inline{display:inline-flex;align-items:center;gap:6px;margin-right:10px}
+.chk input[type=checkbox]{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;margin:2px 0 0;cursor:pointer;display:grid;place-content:center;background:var(--surface);transition:background .15s}
+.chk input[type=checkbox]:checked{background:var(--ok);border-color:var(--ok)}
+.chk input[type=checkbox]:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.done-title{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--mark) 70%,transparent) 58%)}
+.next{padding:0;margin:0}.next li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line)}.next li:last-child{border-bottom:0}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap;vertical-align:middle}
+.pill.g,.pill.ok{background:transparent;border:1px solid var(--ok);color:var(--ok)}
+.pill.p,.pill.warn{background:transparent;border:1px solid var(--warn);color:var(--warn)}
 .pill.l{background:transparent;border:1px solid var(--line);color:var(--muted)}
-.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:10px;padding:9px 15px;font-weight:700;cursor:pointer;text-decoration:none;font-size:15px}
+.btn.sm{padding:6px 11px;font-size:14px;border-radius:8px}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.danger{background:transparent;border-color:var(--warn);color:var(--warn)}
-.btn:hover{opacity:.88}
-.rules{margin:0;padding-left:22px}
-.rules li{margin:6px 0}
-pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:13px;background:var(--accent-soft);border-radius:8px;padding:14px;margin:10px 0;line-height:1.5}
-.tracks{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+.btn:hover{filter:brightness(1.08)} .btn:active{transform:translateY(1px)}
+.linkbtn{background:none;border:0;color:var(--accent);cursor:pointer;padding:0;font-size:14px;text-decoration:underline}
+.rules{margin:10px 0 0;padding-left:22px}.rules li{margin:6px 0}
+.plain{margin:6px 0 0;padding-left:18px}
+pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:13px;background:var(--accent-soft);border-radius:10px;padding:14px;margin:10px 0;line-height:1.5}
+.tracks{display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
 @media (max-width:860px){.tracks{grid-template-columns:1fr}}
-.tlist{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto}
-@media (max-width:860px){.tlist{position:static;max-height:none}}
-.tlist button{width:100%;text-align:left;background:transparent;border:0;border-left:4px solid transparent;padding:8px 10px;cursor:pointer;display:grid;grid-template-columns:30px 1fr 42px;gap:6px;align-items:center;border-radius:0 8px 8px 0}
+.tlist{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto;padding:8px}
+@media (max-width:860px){.tlist{position:static;max-height:none;display:flex;overflow-x:auto;gap:4px}.tlist button{min-width:220px}}
+.tlist button{width:100%;text-align:left;background:transparent;border:0;padding:8px 10px;cursor:pointer;display:grid;grid-template-columns:34px 1fr 42px;gap:6px;align-items:center;border-radius:10px}
 .tlist button:hover{background:var(--accent-soft)}
-.tlist button[aria-pressed="true"]{border-left-color:var(--accent);background:var(--accent-soft)}
-.thead{border-left:6px solid var(--tc,var(--accent))}
+.tlist button[aria-pressed="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.thead{border-top:6px solid var(--tc,var(--accent))}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
-.filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 12px;font-size:14px;cursor:pointer}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 13px;font-size:14px;cursor:pointer}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
-.step.isdone{border-color:var(--ok)}
-.stitle{font-family:var(--display);font-size:18px;font-weight:700;line-height:1.25}
-.step .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.step .desc{margin-top:8px;max-width:72ch}
-.res{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
-.res li{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;font-size:15px}
-.rtype{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);min-width:76px}
-.proj{margin-top:10px;font-size:15px;border-left:3px solid var(--mark);padding:4px 10px;background:color-mix(in srgb,var(--mark) 14%,transparent)}
-.phase{border-left:4px solid var(--line);padding:4px 0 4px 20px;margin-left:6px;position:relative}
-.phase::before{content:"";position:absolute;left:-11px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:4px solid var(--line)}
-.phase.now{border-left-color:var(--accent)}
-.phase.now::before{border-color:var(--accent);background:var(--mark)}
-.phase.past::before{background:var(--ok);border-color:var(--ok)}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.step.isdone{border-color:color-mix(in srgb,var(--ok) 60%,var(--line))}
+.stephead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.stitle{font-family:var(--display);font-size:19px;font-weight:700;line-height:1.25}
+.stepbody{padding-left:34px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.desc{margin-top:8px;max-width:72ch}
+.res{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:7px}
+.res li{display:grid;grid-template-columns:86px 1fr;gap:8px;align-items:baseline;font-size:15px}
+.rtype{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.proj{margin-top:12px;font-size:15px;border-left:3px solid var(--mark);padding:6px 12px;background:color-mix(in srgb,var(--mark) 14%,transparent);border-radius:0 8px 8px 0}
+.labs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.lablink{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:14px;text-decoration:none}
+.lablink:hover{filter:brightness(.97)}.lablink.planned{background:transparent;border:1px dashed var(--line);color:var(--muted);font-weight:600}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted)}.dot.sw{background:var(--accent)}.dot.hw{background:var(--warn)}
+.evform{margin-top:12px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+.evform summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent)}
+.evform form{display:grid;gap:10px;margin-top:10px}
+.evbox{margin-top:12px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;background:color-mix(in srgb,var(--ok) 9%,transparent);border-radius:10px;padding:8px 12px;font-size:15px}
+.evbox p{flex:1;min-width:200px}
+.metro{display:grid;grid-template-columns:repeat(6,1fr);position:relative}
+.metro::before{content:"";position:absolute;left:8%;right:8%;top:11px;height:4px;background:var(--line);border-radius:4px}
+.stop{display:grid;justify-items:center;text-align:center;gap:2px;text-decoration:none;color:inherit;position:relative;font-size:14px}
+.stop .node{width:26px;height:26px;border-radius:50%;background:var(--surface);border:4px solid var(--line)}
+.stop.past .node{background:var(--ok);border-color:var(--ok)}.stop.now .node{background:var(--mark);border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+@media (max-width:700px){.metro{grid-template-columns:repeat(3,1fr);row-gap:14px}.metro::before{display:none}}
+.phase{border-left:4px solid var(--line);padding:4px 0 4px 22px;margin-left:8px;position:relative;scroll-margin-top:90px}
+.phase::before{content:"";position:absolute;left:-12px;top:4px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:4px solid var(--line)}
+.phase.now{border-left-color:var(--accent)}.phase.now::before{border-color:var(--accent);background:var(--mark)}.phase.past::before{background:var(--ok);border-color:var(--ok)}
 .pgroup{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}
-.pgroup .card{padding:14px}
-.pgroup .chk{padding:5px 0;font-size:15px}
-.tlabel{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:flex;gap:8px;align-items:center}
-.tlabel i{width:10px;height:10px;border-radius:2px;background:var(--tc);display:inline-block}
-.search{width:100%;max-width:520px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
-.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-top:16px}
-.gloss dt{font-family:var(--display);font-weight:700;font-size:17px}
-.gloss dd{margin:4px 0 0;color:var(--muted);font-size:15px}
+.pgroup .card{padding:14px}.pgroup .chk{padding:5px 0;font-size:15px}
+.tlabel{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.tlabel i{width:10px;height:10px;border-radius:3px;background:var(--tc)}
+.search{width:100%;max-width:520px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:16px}
+.gterm{margin:0;padding:14px}.gloss dt{font-family:var(--display);font-weight:700;font-size:17px}.gloss dd{margin:4px 0 0;color:var(--muted);font-size:15px}
 .gcat{grid-column:1/-1;margin-top:12px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:4px}
 .tablewrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:640px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:15px}
+table{border-collapse:collapse;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:15px}
 th{font-family:var(--display);background:var(--accent-soft)}
-.form{display:grid;gap:10px;grid-template-columns:2fr 1fr 1fr auto;align-items:end}
+.form{display:grid;gap:10px;grid-template-columns:2fr 1fr 1fr auto;align-items:end;margin:12px 0}
 @media (max-width:760px){.form{grid-template-columns:1fr}}
 label.f{display:grid;gap:4px;font-size:14px;font-weight:600}
-label.f input,label.f select,textarea{border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:var(--surface)}
-textarea{width:100%;min-height:110px;resize:vertical}
-.goal{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
-.goal .x{margin-left:auto;background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:14px}
-.logitem{padding:10px 0;border-bottom:1px solid var(--line)}
-.logitem time{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
-.toast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-.sec{margin-top:28px}
-.sec>h2{margin-bottom:12px}
+label.f.inline{display:inline-flex;align-items:center;gap:8px}
+label.f input:not([type=range]):not([type=checkbox]):not([type=radio]),label.f select,textarea,.ctrls input:not([type=range]),.sqlb select,.sqlb input{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--surface)}
+input[type=range]{accent-color:var(--accent);width:100%;min-width:120px}
+textarea{width:100%;min-height:110px;resize:vertical;margin:8px 0}
+.goal{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.logitem{padding:10px 0;border-bottom:1px solid var(--line)}.logitem time{font-family:var(--mono);font-size:12px;color:var(--muted)}.logitem p{white-space:pre-wrap;margin-top:2px}
+.warnbox{border-color:var(--warn)}.warntext{color:var(--warn)}.oktext{color:var(--ok)}
+.evlist{list-style:none;padding:0;margin:0;display:grid;gap:10px}.evlist li{border-bottom:1px solid var(--line);padding-bottom:10px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);padding:11px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50;max-width:90vw}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.labgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.labcard{display:grid;gap:6px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.labcard:hover{transform:translateY(-2px);border-color:var(--accent)}.labcard b{font-family:var(--display);font-size:18px}
+.labtag{justify-self:start;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.labtag.hw{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
+.crumbs{font-size:14px;color:var(--muted);margin-bottom:10px}
+.labhead{display:grid;gap:10px;margin-bottom:18px}
+.learn{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:4px 0 0;list-style:none}
+.learn li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:14px;max-width:420px}
+.labnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.lotes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}
+.lote{border:1px dashed var(--line);border-radius:10px;padding:12px;display:grid;gap:2px;align-content:start}
+.labstage{display:grid;gap:12px}
+.linked .chk{padding:6px 0}
+.ctrls{gap:8px;align-items:center}
+.k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:6px 0 4px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.readout>div{background:var(--accent-soft);border-radius:10px;padding:10px 12px;display:grid}
+.readout b{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.note{background:color-mix(in srgb,var(--mark) 18%,transparent);border-left:3px solid var(--mark);padding:10px 14px;border-radius:0 10px 10px 0}
+.infobox{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:6px}
+.console{background:#0f1520;color:#d8e1f0;font-family:var(--mono);font-size:13px;border-radius:10px;padding:12px;margin:0;white-space:pre-wrap;min-height:44px;max-height:320px;overflow:auto}
+.log{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;max-height:220px;overflow:auto;display:grid;gap:4px;align-content:start}
+.log .ok{color:var(--ok);font-weight:700}.log .warn{color:var(--warn);font-weight:700}
+.pcwrap{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:center}
+@media (max-width:760px){.pcwrap{grid-template-columns:1fr}}
+.board{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px;border-radius:16px;background:#0f5132;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px)}
+.part{position:relative;border:2px solid rgba(255,255,255,.35);background:#173a2a;color:#e8f5ee;border-radius:10px;padding:10px;display:grid;gap:2px;text-align:left;cursor:pointer;min-height:76px;transition:box-shadow .2s,background .2s}
+.part b{font-family:var(--display);font-size:16px}.part span{font-size:12px;opacity:.8}
+.part.active{box-shadow:0 0 0 3px var(--mark),0 0 18px var(--mark);background:#245a41}.part.alert{box-shadow:0 0 0 3px var(--warn),0 0 18px var(--warn)}
+.p-cpu{background:#2a2f3a}
+.fan{position:absolute;right:8px;top:8px;width:18px;height:18px;border-radius:50%;border:3px dotted #9cf}
+.p-cpu.spin .fan{animation:spin .4s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.ramcells{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;margin-top:4px}.ramcells i{height:9px;border:1px solid rgba(255,255,255,.4);border-radius:2px}
+.packet{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:var(--mark);opacity:0;box-shadow:0 0 12px var(--mark);pointer-events:none;z-index:3}
+.monitor{display:grid;justify-items:center}.screen{width:100%;aspect-ratio:16/10;background:linear-gradient(135deg,#1f3b8f,#2747C7);border:10px solid #222;border-radius:10px;padding:8px;display:grid;align-content:start;gap:6px;color:#fff}
+.screen.off{background:#05070a}.stand{width:30%;height:16px;background:#333;border-radius:0 0 8px 8px}
+.dock{display:flex;flex-wrap:wrap;gap:6px}.win{background:rgba(255,255,255,.95);color:#111;border-top:6px solid var(--c);border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.win button{border:0;background:#eee;border-radius:4px;cursor:pointer;line-height:1}.swapnote{font-size:12px;background:rgba(0,0,0,.35);padding:4px 6px;border-radius:6px}
+.bitsrow{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.bit{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 0;display:grid;justify-items:center;gap:4px;cursor:pointer}
+.bit b{font-family:var(--mono);font-size:22px}.bit small{font-family:var(--mono);color:var(--muted)}
+.lamp{width:22px;height:22px;border-radius:50%;background:var(--line)}.bit.on .lamp{background:var(--mark);box-shadow:0 0 14px var(--mark)}.bit.on{border-color:var(--accent)}
+.challenges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.trace{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}@media (max-width:760px){.trace{grid-template-columns:1fr}}
+.codebox{background:#0f1520;color:#d8e1f0;font-family:var(--mono);font-size:14px;border-radius:10px;padding:10px 0;margin:0;overflow:auto}
+.codebox .ln{display:block;padding:2px 12px;white-space:pre}.codebox .ln i{display:inline-block;width:2em;color:#6b7a90;font-style:normal}
+.codebox .ln.cur{background:rgba(245,213,71,.22);box-shadow:inset 3px 0 0 #F5D547}
+.vars{border:0}.vars td{padding:6px 10px}
+.bars{display:flex;align-items:flex-end;gap:3px;height:220px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px}
+.bars span{flex:1;background:var(--accent);border-radius:4px 4px 0 0;transition:height .12s}.bars span.hi{background:var(--warn)}.bars span.ok{background:var(--ok)}
+.play{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media (max-width:860px){.play{grid-template-columns:1fr}}
+.editors textarea.code{font-family:var(--mono);font-size:13px;min-height:120px;background:#0f1520;color:#d8e1f0;border:0;border-radius:10px;padding:10px;margin:0 0 6px;tab-size:2}
+.preview iframe{width:100%;height:330px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.netline{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:14px 0}
+.netline .node{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;display:grid;justify-items:center;text-align:center}
+.netline .node b{font-family:var(--display)}.netline .node span{font-size:13px;color:var(--muted)}
+.sqlb{display:flex;flex-wrap:wrap;gap:10px}.sqlb fieldset{border:1px solid var(--line);border-radius:10px;padding:8px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sqlb legend{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent)}
+.gitcols{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media (max-width:760px){.gitcols{grid-template-columns:1fr 1fr}}
+.gcol{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;display:grid;gap:6px;align-content:start;min-height:130px}
+.gchip{display:block;font-family:var(--mono);font-size:12px;padding:5px 8px;border-radius:7px;background:var(--surface);border:1px solid var(--line);overflow-wrap:anywhere}
+.gchip.w{border-color:var(--warn);color:var(--warn)}.gchip.s{border-color:var(--accent);color:var(--accent)}.gchip.new{border-style:dashed}.gchip.theirs{background:color-mix(in srgb,var(--mark) 25%,transparent)}
+.term{min-height:120px}
+.nn{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}@media (max-width:760px){.nn{grid-template-columns:1fr}}
+.nn canvas{background:var(--paper);border:1px solid var(--line);border-radius:10px;cursor:crosshair}.nn label.f{margin-bottom:8px}
+.llmtxt{font-family:var(--display);font-size:clamp(20px,3vw,28px);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+.llmtxt mark{background:var(--mark);color:#111;border-radius:6px;padding:0 6px}.caret{animation:blink 1s steps(1) infinite;color:var(--accent)}@keyframes blink{50%{opacity:0}}
+.probs{display:grid;gap:6px}.prob{display:grid;grid-template-columns:120px 1fr 64px 40px;gap:10px;align-items:center}
+.prob .bar{height:14px}
+.ohm{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:start}@media (max-width:760px){.ohm{grid-template-columns:1fr}}
+.ohm svg{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:12px}.ohm label.f{margin-bottom:10px}
+.mbwrap{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}@media (max-width:760px){.mbwrap{grid-template-columns:1fr;justify-items:center}}
+.mb{position:relative;width:270px;height:220px;background:linear-gradient(160deg,#2b2f36,#16191e);border-radius:22px 22px 10px 10px;display:grid;place-items:center}
+.mb.shake{animation:shake .45s}@keyframes shake{20%{transform:translateX(-8px) rotate(-3deg)}40%{transform:translateX(8px) rotate(3deg)}60%{transform:translateX(-6px)}80%{transform:translateX(5px)}}
+.mbleds{display:grid;grid-template-columns:repeat(5,22px);gap:10px}
+.led{width:22px;height:22px;border-radius:4px;border:0;background:#3a1010;cursor:pointer;padding:0}.led.on{background:#ff3b30;box-shadow:0 0 12px #ff3b30}
+.mbbtn{position:absolute;top:86px;width:36px;height:36px;border-radius:50%;border:4px solid #555;background:#111;color:#fff;font-weight:800;cursor:pointer}
+.mbbtn.a{left:14px}.mbbtn.b{right:14px}.mbbtn:active{transform:scale(.92)}
+.mbpins{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#c9a227;color:#3b2f00;font:700 11px var(--mono);padding:6px 0;border-radius:0 0 10px 10px}
+.ard{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}@media (max-width:760px){.ard{grid-template-columns:1fr}}
+.ard svg{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:12px}.serial{max-height:160px}
+.slicer{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}@media (max-width:760px){.slicer{grid-template-columns:1fr}}
+.slicer canvas{background:var(--paper);border:1px solid var(--line);border-radius:10px;flex:1 1 0;min-width:0}.slicer label.f{margin:8px 0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap topbar">
-    <a class="brand" href="#inicio"><i></i>Projeto Perfeição</a>
+    <a class="brand" href="#inicio"><i></i><span>Projeto Perfeição</span></a>
     <nav class="tabs" id="tabs" aria-label="Seções">
       <a href="#inicio">Início</a>
       <a href="#trilhas">Trilhas</a>
+      <a href="#laboratorio">Laboratório</a>
       <a href="#linha-do-tempo">Linha do tempo</a>
+      <a href="#evidencias">Evidências</a>
       <a href="#glossario">Glossário</a>
       <a href="#rotina">Rotina</a>
-      <a href="#metas">Metas e diário</a>
+      <a href="#metas">Metas</a>
       <a href="#backup">Backup</a>
     </nav>
     <span class="sync" id="sync"><b></b><span>Salvo neste navegador</span></span>
@@ -164,588 +263,15 @@ textarea{width:100%;min-height:110px;resize:vertical}
 </header>
 <main class="wrap" id="view"></main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script>
-const GRAD = "2030-07-31";
-const PHASES = [
- {n:"Fase 0",t:"Mapa e alicerce",p:"nov/2026 – fev/2027",end:"2027-02-28",g:"Entender o mapa, montar seu sistema de estudo, lógica e Python bem feitos, micro:bit, Tinkercad, Bambu Lab e o hábito diário de inglês."},
- {n:"Fase 1",t:"Fundamentos",p:"mar – jul/2027",end:"2027-07-31",g:"CS50, terminal, Git e GitHub, HTML e CSS, eletrônica básica, planilhas e Canva de verdade, Scratch e aprendizagem criativa."},
- {n:"Fase 2",t:"Construir",p:"ago – dez/2027",end:"2027-12-31",g:"JavaScript, primeiros back-ends e SQL, Arduino, CAD paramétrico, Office avançado, IA na sala de aula com ética."},
- {n:"Fase 3",t:"Profundidade",p:"jan – dez/2028",end:"2028-12-31",g:"Algoritmos e estruturas de dados, React e TypeScript, APIs e bancos de dados, ESP32, Blender, Machine Learning, inglês B2."},
- {n:"Fase 4",t:"Projetos reais",p:"jan – dez/2029",end:"2029-12-31",g:"Aplicações full stack no ar, apps mobile, construir com APIs de IA, projetos maker integrados, portfólio forte."},
- {n:"Fase 5",t:"Lapidar e transição",p:"jan – jul/2030",end:"2030-07-31",g:"TCC alinhado à carreira, especialização, certificação de inglês se precisar e a transição para a nova área."}
-];
-const TC = {base:"#2747C7",dev:"#0F766E",ia:"#A21CAF",maker:"#C2410C",prof:"#B45309",vida:"#4D7C0F"};
-const YT = q => "yt:"+q;
-const TRACKS = [
-{id:"aprender",g:"vida",name:"Aprender a aprender",what:"Como o seu cérebro aprende e como organizar estudo, foco e revisão.",why:"É a trilha que multiplica todas as outras. Quem aprende do jeito certo aprende o dobro no mesmo tempo.",steps:[
- ["a1",0,"Entender como a memória funciona","Recuperação ativa (testar a si mesmo), repetição espaçada, intercalar assuntos e dormir bem. Reler e grifar quase não funciona.",[["c","Learning How to Learn (Barbara Oakley)","https://www.coursera.org/learn/learning-how-to-learn","gp","en (legendas pt)"],["l","Fixe o Conhecimento (Brown, Roediger e McDaniel)","","p","pt"]],"Escreva uma página: como você vai estudar a partir de agora."],
- ["a2",0,"Montar seu sistema de estudo","Um lugar para anotações, um para flashcards e um calendário com blocos fixos. Simples e todo dia vence complexo e de vez em quando.",[["f","Anki (flashcards com repetição espaçada)","https://apps.ankiweb.net/","g","pt"],["f","Obsidian (anotações em Markdown)","https://obsidian.md/","g","pt"],["f","Google Agenda com blocos de estudo","https://calendar.google.com/","g","pt"]],"Crie seu baralho do Anki “Computação” e bloqueie os horários da Rotina no calendário."],
- ["a3",0,"Foco profundo e hábitos","Trabalhar sem distração em blocos de 25 a 50 minutos. Celular em outro cômodo. Comece pequeno e não quebre a corrente.",[["l","Trabalho Focado (Cal Newport)","","p","pt"],["l","Hábitos Atômicos (James Clear)","","p","pt"],["l","Ultralearning (Scott Young)","","p","pt"]],""],
- ["a4",1,"Revisão mensal e semestral","No último domingo do mês, 30 minutos: o que concluí, o que travou, o que muda. A cada semestre, reveja a fase no site e ajuste as metas.",[["s","Aba “Metas e diário” deste site","#metas","g","pt"]],"Escreva a primeira revisão mensal no Diário de bordo."]
-]},
-{id:"base",g:"base",name:"Como o computador funciona",what:"Os fundamentos: hardware, sistemas operacionais, redes, terminal e a matemática por trás.",why:"Foi isso que faltou quando você começou pelo Python: entender o que existe por baixo. Com essa base, os nomes deixam de assustar.",steps:[
- ["b1",0,"O mapa: o que é cada coisa","Leia o Glossário deste site e assista aos primeiros episódios de Crash Course Computer Science. A meta é saber o que é cada peça e como elas se encaixam.",[["s","Glossário deste site","#glossario","g","pt"],["y","Crash Course Computer Science","https://www.youtube.com/@crashcourse","g","en (legendas pt)"],["l","Código: a linguagem oculta do hardware e do software (Charles Petzold)","","p","pt"]],""],
- ["b2",1,"CS50x de Harvard","A melhor introdução à computação do mundo, gratuita. Passa por C, memória, algoritmos, Python, SQL e web. Faça com calma, um problema por semana.",[["c","CS50x — Harvard","https://cs50.harvard.edu/x/","g","en (legendas pt)"]],"Concluir os problem sets e o projeto final. Publique o projeto no GitHub."],
- ["b3",1,"Terminal no seu MacBook","O terminal (zsh no Mac) é onde você conversa com o computador por texto: navegar pastas, rodar programas, usar Git.",[["c","The Missing Semester (MIT)","https://missing.csail.mit.edu/","g","en"],["s","Linux Journey","https://linuxjourney.com/","g","en"]],"Fazer uma semana inteira de tarefas de arquivos só pelo terminal."],
- ["b4",2,"Matemática para computação","Lógica, conjuntos, combinatória, funções e noções de álgebra linear. Ajuda em algoritmos, IA e na própria faculdade.",[["c","Khan Academy","https://pt.khanacademy.org/","g","pt"],["y","3Blue1Brown","https://www.youtube.com/@3blue1brown","g","en (legendas pt)"],["l","Matemática Discreta e suas Aplicações (Kenneth Rosen)","","p","pt"]],""],
- ["b5",3,"Redes e internet","Como dados viajam: IP, DNS, TCP, HTTP, Wi-Fi. Essencial para web e para explicar a internet aos alunos.",[["c","Cisco Networking Academy (cursos introdutórios)","https://www.netacad.com/","g","pt/en"],["l","Redes de Computadores e a Internet (Kurose e Ross)","","p","pt"]],""],
- ["b6",3,"Sistemas operacionais","Processos, memória, arquivos e concorrência. O que o macOS, o Windows e o Android fazem por baixo.",[["l","Operating Systems: Three Easy Pieces","https://pages.cs.wisc.edu/~remzi/OSTEP/","g","en"]],""],
- ["b7",3,"Arquitetura na prática","Do transistor à CPU. Ver um computador sendo montado em protoboard muda sua forma de pensar.",[["y","Ben Eater","https://www.youtube.com/@BenEater","g","en"],["c","Nand2Tetris","https://www.nand2tetris.org/","g","en"]],""],
- ["b8",4,"Segurança básica","Senhas, golpes, vulnerabilidades web comuns e boas práticas. Útil como dev e como professor.",[["s","OWASP Top 10","https://owasp.org/www-project-top-ten/","g","en"],["c","TryHackMe (trilhas iniciantes)","https://tryhackme.com/","gp","en"]],""]
-]},
-{id:"python",g:"dev",name:"Lógica e Python",what:"Pensar como programador e escrever programas em Python, a linguagem mais usada para começar, para dados e para IA.",why:"Lógica é igual em toda linguagem. Python é a sua primeira ferramenta séria.",steps:[
- ["c1",0,"Lógica de programação antes da linguagem","Variáveis, condições, laços e funções existem em todas as linguagens. Aprenda o conceito primeiro, a sintaxe depois.",[["c","Curso em Vídeo — Algoritmos (Gustavo Guanabara)","https://www.cursoemvideo.com/","g","pt"],["f","Scratch","https://scratch.mit.edu/","g","pt"]],"Resolver 20 problemas pequenos no papel ou no Scratch."],
- ["c2",0,"Python do zero, bem feito","Refaça o básico com calma, mesmo o que você já viu. Digite todo o código, nunca copie e cole.",[["c","Curso em Vídeo — Python 3 (Mundos 1, 2 e 3)","https://www.cursoemvideo.com/","g","pt"],["l","Pense em Python (Allen Downey)","https://penseallen.github.io/PensePython2e/","g","pt"],["s","Tutorial oficial do Python","https://docs.python.org/pt-br/3/tutorial/","g","pt"]],"Terminar os 3 mundos com todos os desafios."],
- ["c3",1,"Exercitar todo dia","Programar é como academia: 1 exercício por dia vale mais que 10 no fim de semana.",[["f","Beecrowd (juiz online brasileiro)","https://judge.beecrowd.com/","g","pt"],["f","Exercism — trilha Python","https://exercism.org/tracks/python","g","en"]],"100 exercícios resolvidos."],
- ["c4",1,"Python para automatizar a vida","Planilhas, PDFs, arquivos e e-mails. É aqui que Python começa a economizar seu tempo como professor.",[["l","Automate the Boring Stuff with Python","https://automatetheboringstuff.com/","g","en"],["l","Automatize Tarefas Maçantes com Python (edição em pt)","","p","pt"]],"Um script que organize as notas ou a chamada de uma turma."],
- ["c5",1,"Ciência da Computação com Python (USP)","Curso da USP que ensina a pensar como cientista da computação usando Python.",[["c","Introdução à Ciência da Computação com Python — Parte 1 (USP)","https://www.coursera.org/learn/ciencia-computacao-python-conceitos","gp","pt"]],""],
- ["c6",2,"Orientação a objetos e código limpo","Classes, módulos, testes simples e nomes claros. A diferença entre código que funciona e código bom.",[["l","Python Fluente (Luciano Ramalho)","https://pythonfluente.com/","g","pt"],["l","Código Limpo (Robert C. Martin)","","p","pt"]],""],
- ["c7",3,"Python para dados","pandas, gráficos e análise. Base para IA e ótimo para analisar desempenho de turmas.",[["c","Kaggle Learn (Python, pandas, visualização)","https://www.kaggle.com/learn","g","en"]],"Analisar um conjunto de dados real e publicar o notebook."]
-]},
-{id:"devkit",g:"dev",name:"Git, GitHub e o kit do dev",what:"As ferramentas do dia a dia de quem programa: editor de código, controle de versão e portfólio.",why:"Sem Git você não trabalha em equipe e não mostra seu trabalho. GitHub é o seu currículo vivo.",steps:[
- ["d0",0,"GitHub Student Developer Pack","Como estudante você ganha de graça GitHub Copilot, cursos, domínios e créditos em nuvem. Faça isso hoje.",[["f","GitHub Education — Student Pack","https://education.github.com/pack","g","en"]],""],
- ["d1",0,"VS Code","O editor de código mais usado. Instale as extensões de Python e Live Server e aprenda os atalhos principais.",[["f","Visual Studio Code","https://code.visualstudio.com/","g","pt"]],""],
- ["d2",1,"Git e GitHub","Git guarda o histórico do seu código no computador. GitHub é o site que hospeda esse histórico e mostra seus projetos.",[["c","GitHub Skills","https://skills.github.com/","g","en"],["c","Curso em Vídeo — Git e GitHub","https://www.cursoemvideo.com/","g","pt"],["l","Pro Git","https://git-scm.com/book/pt-br/v2","g","pt"]],"Todo exercício a partir de agora vai para um repositório."],
- ["d3",1,"GitHub como portfólio","README de perfil, repositórios organizados e sites publicados com GitHub Pages.",[["s","GitHub Pages","https://pages.github.com/","g","en"]],"Publicar este Projeto Perfeição no seu GitHub Pages."],
- ["d4",2,"Markdown e documentação","Escrever README, anotações e documentação de forma clara.",[["s","Markdown Guide","https://www.markdownguide.org/","g","en"]],""],
- ["d5",3,"Docker","Empacotar um programa com tudo de que ele precisa para rodar em qualquer máquina.",[["s","Docker — Get Started","https://docs.docker.com/get-started/","g","en"]],""],
- ["d6",4,"Testes automatizados e CI","Testes que rodam sozinhos a cada push no GitHub.",[["s","pytest","https://docs.pytest.org/","g","en"],["s","GitHub Actions","https://docs.github.com/actions","g","pt/en"]],""]
-]},
-{id:"front",g:"dev",name:"Front-end",what:"Tudo o que a pessoa vê e toca num site ou app: HTML (estrutura), CSS (visual) e JavaScript (comportamento).",why:"Você quer criar sites e ferramentas de verdade, não superficiais. Front-end bem feito é acessível, rápido e bonito.",steps:[
- ["e1",1,"HTML e CSS fundamentos","Estrutura semântica, caixas, Flexbox e Grid.",[["c","Curso em Vídeo — HTML5 e CSS3","https://www.cursoemvideo.com/","g","pt"],["s","MDN — Aprenda desenvolvimento web","https://developer.mozilla.org/pt-BR/docs/Learn","g","pt"],["f","Flexbox Froggy","https://flexboxfroggy.com/","g","pt"],["f","Grid Garden","https://cssgridgarden.com/","g","pt"]],"Página pessoal de professor, feita à mão."],
- ["e2",2,"JavaScript de verdade","Variáveis, funções, arrays, objetos, DOM, eventos, fetch e assíncrono.",[["s","javascript.info em português","https://pt.javascript.info/","g","pt"],["l","Eloquent JavaScript","https://eloquentjavascript.net/","g","en"],["c","Curso em Vídeo — JavaScript","https://www.cursoemvideo.com/","g","pt"]],"Um quiz interativo para seus alunos."],
- ["e3",2,"Uma trilha completa e estruturada","Escolha uma e vá até o fim. The Odin Project é a mais completa e baseada em projetos.",[["c","The Odin Project","https://www.theodinproject.com/","g","en"],["c","freeCodeCamp","https://www.freecodecamp.org/learn","g","pt/en"]],""],
- ["e4",2,"CSS profissional e responsivo","Layouts que funcionam no celular, no tablet e no monitor.",[["y","Kevin Powell","https://www.youtube.com/@KevinPowell","g","en"],["f","Frontend Mentor (desafios com design pronto)","https://www.frontendmentor.io/","gp","en"],["c","CSS for JavaScript Developers (Josh Comeau)","https://css-for-js.dev/","p","en"]],"5 desafios do Frontend Mentor."],
- ["e5",3,"Acessibilidade e design de interface","Sites que todos conseguem usar, incluindo pessoas com deficiência. Noções de UX e Figma.",[["c","web.dev — Learn Accessibility","https://web.dev/learn/accessibility","g","en"],["f","Figma","https://www.figma.com/","gp","pt"],["l","Não Me Faça Pensar (Steve Krug)","","p","pt"]],""],
- ["e6",3,"TypeScript","JavaScript com tipos: menos erros e código mais fácil de manter.",[["s","TypeScript Handbook","https://www.typescriptlang.org/docs/handbook/intro.html","g","en"]],""],
- ["e7",3,"React","A biblioteca mais usada para interfaces. Componentes, estado e efeitos.",[["s","react.dev — Learn","https://react.dev/learn","g","pt/en"],["c","Full Stack Open (Univ. de Helsinque)","https://fullstackopen.com/ptbr/","g","pt"],["y","Rocketseat","https://www.youtube.com/@rocketseat","g","pt"]],"Um app de banco de atividades da sua disciplina."],
- ["e8",4,"Next.js e publicação","Framework React com rotas, servidor e deploy simples.",[["c","Next.js Learn","https://nextjs.org/learn","g","en"],["f","Vercel","https://vercel.com/","gp","en"]],""]
-]},
-{id:"back",g:"dev",name:"Back-end e dados",what:"O que roda no servidor: regras, banco de dados, login, APIs. É o que faz um app guardar e processar informações.",why:"Ferramentas não superficiais precisam de back-end: salvar dados, ter usuários, conversar com outros sistemas.",steps:[
- ["f1",2,"Como a web funciona","Cliente e servidor, requisição e resposta, métodos GET e POST, códigos de status, JSON.",[["s","MDN — HTTP","https://developer.mozilla.org/pt-BR/docs/Web/HTTP","g","pt"]],""],
- ["f2",2,"SQL e bancos de dados","Tabelas, chaves, consultas, junções. SQL é usado em quase toda empresa.",[["f","SQLBolt (exercícios interativos)","https://sqlbolt.com/","g","en"],["c","Curso em Vídeo — Banco de Dados MySQL","https://www.cursoemvideo.com/","g","pt"]],"Modelar o banco de uma biblioteca escolar."],
- ["f3",3,"APIs com Python (FastAPI)","Criar sua própria API, documentada automaticamente.",[["s","FastAPI — tutorial","https://fastapi.tiangolo.com/pt/","g","pt"],["f","Bruno (testar APIs)","https://www.usebruno.com/","g","en"]],"API do banco de questões."],
- ["f4",3,"Node.js e Express","Back-end em JavaScript, a mesma linguagem do front-end.",[["s","Node.js — Learn","https://nodejs.org/en/learn","g","en"],["c","Full Stack Open — partes 3 e 4","https://fullstackopen.com/ptbr/","g","pt"]],""],
- ["f5",3,"PostgreSQL e modelagem","O banco de dados relacional mais respeitado. Normalização e índices.",[["s","Tutorial oficial do PostgreSQL","https://www.postgresql.org/docs/current/tutorial.html","g","en"]],""],
- ["f6",4,"Login e segurança web","Senhas com hash, sessões, tokens, permissões. Nunca guarde senha em texto puro.",[["s","OWASP Cheat Sheets","https://cheatsheetseries.owasp.org/","g","en"]],""],
- ["f7",4,"Back-end pronto (Supabase ou Firebase)","Banco, login e arquivos sem montar servidor. Ótimo para protótipos rápidos.",[["f","Supabase","https://supabase.com/","gp","en"],["f","Firebase","https://firebase.google.com/","gp","pt"]],""],
- ["f8",4,"Nuvem e deploy","Colocar seu sistema no ar: hospedagem, domínios, variáveis de ambiente.",[["f","Render","https://render.com/","gp","en"],["c","AWS Skill Builder","https://skillbuilder.aws/","gp","pt/en"],["c","Google Cloud Skills Boost","https://www.cloudskillsboost.google/","gp","pt/en"]],"Projeto full stack no ar com endereço próprio."],
- ["f9",4,"Arquitetura de sistemas","Como sistemas grandes são desenhados: filas, cache, escalabilidade.",[["y","ByteByteGo","https://www.youtube.com/@ByteByteGo","g","en"],["l","Designing Data-Intensive Applications (Martin Kleppmann)","","p","en/pt"]],""]
-]},
-{id:"algo",g:"base",name:"Algoritmos e estruturas de dados",what:"Formas eficientes de organizar dados e resolver problemas. É o coração da Ciência da Computação.",why:"Cai na faculdade, em entrevistas de emprego e separa quem programa de quem copia código.",steps:[
- ["g1",2,"Algoritmos ilustrados","Busca binária, ordenação, recursão, grafos, explicados com desenhos.",[["l","Entendendo Algoritmos (Aditya Bhargava)","","p","pt"]],""],
- ["g2",3,"Estruturas de dados","Listas, pilhas, filas, árvores, grafos e tabelas hash. Implemente cada uma em Python.",[["f","VisuAlgo (visualizações)","https://visualgo.net/","g","pt/en"],["s","NeetCode Roadmap","https://neetcode.io/roadmap","g","en"]],""],
- ["g3",3,"Complexidade (Big O)","Medir quanto um algoritmo cresce em tempo e memória.",[["y","Abdul Bari","https://www.youtube.com/@abdul_bari","g","en"]],""],
- ["g4",4,"Problemas de entrevista","Treino regular para processos seletivos.",[["f","LeetCode","https://leetcode.com/","gp","en"],["l","Cracking the Coding Interview (Gayle McDowell)","","p","en"]],"150 problemas resolvidos."]
-]},
-{id:"apps",g:"dev",name:"Apps e ferramentas próprias",what:"Criar aplicativos e automações que resolvem problemas reais, do bloco ao código.",why:"Para fazer ferramentas para sua escola e mostrar no portfólio que você constrói coisas úteis.",steps:[
- ["h1",1,"MIT App Inventor","Apps Android com blocos. Ótimo para suas aulas e para entender eventos. Teste no seu Galaxy Tab.",[["f","MIT App Inventor","https://appinventor.mit.edu/","g","pt"]],"Um app de sorteio de grupos para a sala."],
- ["h2",2,"Google Apps Script","JavaScript que automatiza Planilhas, Formulários, Gmail e Drive. Para professor, é um superpoder.",[["s","Apps Script — guias","https://developers.google.com/apps-script","g","pt"]],"Correção automática de um formulário com envio de feedback."],
- ["h3",3,"PWA: site que vira app","Um site que instala no celular e funciona offline.",[["c","web.dev — Learn PWA","https://web.dev/learn/pwa","g","en"]],""],
- ["h4",4,"React Native com Expo","Apps nativos para Android e iPhone usando React.",[["s","Expo — docs","https://docs.expo.dev/","g","en"]],""],
- ["h5",4,"Flutter (alternativa)","Outra forma popular de criar apps. Escolha um caminho, Expo ou Flutter, e vá até o fim.",[["s","Flutter — docs","https://docs.flutter.dev/","g","en"]],""],
- ["h6",4,"Ferramenta real para sua escola","Escolha um problema real: empréstimo de kits, banco de questões, chamada. Faça do início ao fim, com usuários reais.",[],"Projeto de portfólio número 1."]
-]},
-{id:"ia",g:"ia",name:"Inteligência Artificial",what:"Usar IA com consciência hoje, entender como ela funciona por dentro e, depois, construir com ela.",why:"Você tem Claude, Gemini e Copilot. A meta é a IA multiplicar o seu cérebro, não substituí-lo.",steps:[
- ["i1",0,"Entender o que é IA, sem exagero","IA, Machine Learning, redes neurais e modelos de linguagem: o que são, o que fazem bem e onde erram.",[["c","Elements of AI","https://www.elementsofai.com/","g","pt"],["c","AI for Everyone (Andrew Ng)","https://www.coursera.org/learn/ai-for-everyone","gp","en (legendas pt)"]],""],
- ["i2",0,"Usar IA como tutor, não como cola","Leia as Regras de ouro na aba Início. Crie um Projeto no Claude para cada disciplina com o material do professor.",[["c","Anthropic Academy","https://www.anthropic.com/learn","g","en"],["s","Guia de prompts da Anthropic","https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview","g","en"],["f","NotebookLM (Google)","https://notebooklm.google.com/","g","pt"]],"Um Projeto no Claude por disciplina da faculdade."],
- ["i3",1,"Qual IA para quê","Claude: textos longos, código, análise de documentos e criação de páginas. Gemini: integrado ao Google Workspace e ao NotebookLM. Copilot: dentro do Word, Excel e PowerPoint, e o GitHub Copilot no VS Code. Teste a mesma tarefa nas três e anote os resultados.",[["s","GitHub Copilot — docs","https://docs.github.com/copilot","g","pt/en"]],"Tabela comparativa sua, com 10 tarefas reais."],
- ["i4",2,"IA na sala de aula com ética","Nunca coloque dados de alunos em IA. Ensine checagem de fatos, autoria e uso transparente. Siga a LGPD e a política da escola.",[["s","Orientações da UNESCO sobre IA generativa na educação","https://www.unesco.org/pt","g","pt"]],"Um plano de aula sobre uso crítico de IA."],
- ["i5",3,"Fundamentos de Machine Learning","Regressão, classificação, treino e teste, overfitting.",[["c","Machine Learning Specialization (Andrew Ng)","https://www.coursera.org/specializations/machine-learning-introduction","gp","en (legendas pt)"],["c","Kaggle — Intro to Machine Learning","https://www.kaggle.com/learn","g","en"],["l","Mãos à Obra: Aprendizado de Máquina com Scikit-Learn, Keras e TensorFlow (Aurélien Géron)","","p","pt"]],""],
- ["i6",3,"Redes neurais por dentro","Como uma rede aprende, do zero, com código.",[["y","3Blue1Brown — série Redes Neurais","https://www.youtube.com/@3blue1brown","g","en (legendas pt)"],["y","Andrej Karpathy — Neural Networks: Zero to Hero","https://www.youtube.com/@AndrejKarpathy","g","en"],["c","fast.ai — Practical Deep Learning","https://course.fast.ai/","g","en"]],""],
- ["i7",4,"Construir com APIs de modelos de linguagem","Chatbots, resumo de documentos e busca nos seus próprios materiais (RAG).",[["s","Documentação da API do Claude","https://docs.claude.com/","g","en"],["c","DeepLearning.AI — Short Courses","https://www.deeplearning.ai/short-courses/","g","en"]],"Um assistente da sua disciplina que responde com base no seu material."],
- ["i8",4,"Agentes e automação com IA","IA que usa ferramentas, lê arquivos e executa tarefas. Entenda o Model Context Protocol.",[["s","Model Context Protocol","https://modelcontextprotocol.io/","g","en"],["s","Claude Code — docs","https://docs.claude.com/en/docs/claude-code/overview","g","en"]],""],
- ["i9",5,"Aprofundar em IA","Escolha um foco: engenharia de ML, IA aplicada à educação, dados. Pode virar seu TCC.",[["l","Inteligência Artificial (Russell e Norvig)","","p","pt"]],""]
-]},
-{id:"maker",g:"maker",name:"Eletrônica, micro:bit e Arduino",what:"Programar coisas físicas: luzes, sensores, motores. Do micro:bit em blocos ao ESP32 conectado à internet.",why:"É o coração da sua aula de Educação Digital e une programação com o mundo real.",steps:[
- ["j1",0,"micro:bit com MakeCode (blocos)","Domine todos os sensores da placa: botões, acelerômetro, bússola, rádio, luz e temperatura.",[["f","MakeCode for micro:bit","https://makecode.microbit.org/","g","pt"],["s","micro:bit — aulas prontas","https://microbit.org/teach/","g","pt/en"]],"Um projeto com rádio entre duas placas."],
- ["j2",1,"micro:bit com Python","A ponte perfeita entre blocos e código de texto, para você e para os alunos.",[["f","Editor Python do micro:bit","https://python.microbit.org/","g","pt/en"]],"Refazer em Python 3 projetos que você fez em blocos."],
- ["j3",1,"Eletrônica básica","Tensão, corrente, resistência, lei de Ohm, LED, resistor, botão e protoboard. Simule antes de montar.",[["f","Tinkercad Circuits","https://www.tinkercad.com/","g","pt"],["y","WR Kits","yt:WR Kits eletrônica","g","pt"],["l","Make: Electronics (Charles Platt)","","p","en"]],""],
- ["j4",2,"Arduino do zero","Entradas e saídas digitais e analógicas, PWM, monitor serial.",[["s","Documentação oficial do Arduino","https://docs.arduino.cc/","g","en"],["f","Wokwi (simulador online)","https://wokwi.com/","g","en"],["y","Brincando com Ideias","yt:Brincando com Ideias arduino","g","pt"],["y","Paul McWhorter — Arduino","yt:Paul McWhorter arduino tutorial","g","en"],["l","Primeiros Passos com o Arduino (Massimo Banzi)","","p","pt"]],""],
- ["j5",2,"Sensores, motores e displays","Ultrassônico, servo, LDR, relé, LCD. Ler a folha de dados (datasheet) de um componente.",[["y","GreatScott!","yt:GreatScott electronics","g","en"]],"Um alarme ou um semáforo inteligente."],
- ["j6",2,"Robótica educacional","Robôs simples para a sala e preparação para olimpíadas.",[["s","Olimpíada Brasileira de Robótica (OBR)","https://www.obr.org.br/","g","pt"]],""],
- ["j7",3,"Multímetro e solda","Medir, encontrar defeitos e soldar com segurança.",[["y","Multímetro e solda para iniciantes","yt:como usar multímetro iniciantes","g","pt"]],""],
- ["j8",3,"ESP32 e Internet das Coisas","Placa com Wi-Fi: sensores que enviam dados para a internet.",[["s","Random Nerd Tutorials","https://randomnerdtutorials.com/","g","en"]],"Estação meteorológica da escola com painel web."],
- ["j9",3,"Raspberry Pi","Um computador completo do tamanho de um cartão, com Linux e Python.",[["s","Raspberry Pi Projects","https://projects.raspberrypi.org/","g","pt/en"]],""],
- ["j10",4,"Projetos integrados","Eletrônica, peças impressas na sua Bambu Lab e código juntos.",[],"Robô seguidor de linha com carcaça impressa, documentado no GitHub."]
-]},
-{id:"3d",g:"maker",name:"Modelagem 3D e fabricação digital",what:"Desenhar objetos no computador e fabricá-los na impressora 3D ou na máquina de corte.",why:"Você já tem as máquinas. Saber projetar transforma suas aulas e seus projetos maker.",steps:[
- ["k1",0,"Tinkercad 3D","Modelar com formas básicas. Ideal para começar e para ensinar.",[["f","Tinkercad","https://www.tinkercad.com/","g","pt"]],"10 objetos úteis para a sala (porta-cabos, chaveiros com nome)."],
- ["k2",0,"Dominar sua Bambu Lab","Fatiador (slicer), arquivos STL e 3MF, suportes, preenchimento, PLA e PETG, manutenção.",[["f","Bambu Studio e Wiki da Bambu Lab","https://wiki.bambulab.com/","g","pt/en"],["s","MakerWorld (modelos prontos)","https://makerworld.com/","g","pt/en"]],""],
- ["k3",1,"Vetores para a máquina de corte","Desenho vetorial (SVG) para cortar vinil, papel ou outros materiais no software da sua máquina.",[["f","Inkscape","https://inkscape.org/","g","pt"]],""],
- ["k4",1,"CAD paramétrico: Onshape ou Fusion","Projetos com medidas exatas e fáceis de alterar. O Onshape roda no navegador, até no tablet. O Fusion roda no seu Mac M1.",[["f","Onshape Education","https://www.onshape.com/en/education","g","en"],["f","Autodesk Fusion (licença educacional ou pessoal)","https://www.autodesk.com/products/fusion-360/","g","pt"],["y","Product Design Online","yt:Product Design Online Fusion 360 beginner","g","en"]],""],
- ["k5",2,"Peças funcionais","Tolerâncias, encaixes, resistência, orientação da impressão.",[["y","CNC Kitchen","yt:CNC Kitchen","g","en"],["y","Maker's Muse","yt:Makers Muse 3d printing","g","en"]],"Uma caixa sob medida para placas Arduino."],
- ["k6",3,"Blender","Modelagem artística, escultura e renderização.",[["f","Blender","https://www.blender.org/","g","pt"],["y","Blender Guru — tutorial do donut","yt:Blender Guru donut tutorial","g","en"]],""],
- ["k7",3,"Modelagem com código (OpenSCAD)","Criar peças 3D programando. Junta duas paixões suas.",[["f","OpenSCAD","https://openscad.org/","g","en"]],""],
- ["k8",4,"Laboratório maker na escola","Organizar espaço, segurança, fluxo de projetos e avaliação.",[["l","Invent to Learn (Martinez e Stager)","","p","en"]],""]
-]},
-{id:"office",g:"prof",name:"Google, Office e Canva",what:"Dominar de verdade as ferramentas de produtividade: documentos, planilhas, apresentações, formulários e design.",why:"Você usa isso todo dia como professor. Dominar atalhos, fórmulas e automações devolve horas por semana.",steps:[
- ["l1",0,"Digitação e atalhos","Digitar sem olhar e usar atalhos do macOS e dos apps. Meta: 50 palavras por minuto ou mais.",[["f","Keybr","https://www.keybr.com/","g","en"],["f","Monkeytype","https://monkeytype.com/","g","pt"]],""],
- ["l2",0,"Google Workspace essencial","Drive organizado, Docs com estilos, Agenda, Gmail com filtros e marcadores.",[["s","Central de Aprendizagem do Google Workspace","https://support.google.com/a/users","g","pt"],["s","Google for Education","https://edu.google.com/","g","pt"]],""],
- ["l3",1,"Planilhas de verdade (Sheets e Excel)","Referências, PROCV e PROCX, SE, tabelas dinâmicas, gráficos, formatação condicional e validação.",[["y","Hashtag Treinamentos","yt:Hashtag Treinamentos excel","g","pt"],["s","Treinamento do Excel (Microsoft)","https://support.microsoft.com/pt-br/excel","g","pt"]],"Planilha de notas que calcula médias e destaca quem precisa de recuperação."],
- ["l4",1,"Formulários e Google Sala de Aula","Testes autocorrigidos, seções, lógica de ramificação, organização das turmas.",[["s","Central de Ajuda do Google Sala de Aula","https://support.google.com/edu/classroom","g","pt"]],""],
- ["l5",1,"Canva profissional","Hierarquia, marca, modelos, apresentações, vídeos curtos e materiais impressos.",[["c","Canva Design School","https://www.canva.com/designschool/","g","pt"],["f","Canva para Educação (grátis para professores)","https://www.canva.com/education/","g","pt"]],"Kit visual da sua disciplina: modelo de slide, cartaz e atividade."],
- ["l6",2,"Word, PowerPoint e Excel avançados","Estilos e sumário automático, mala direta, slide mestre, transições com propósito.",[["c","Microsoft Learn — Educator Center","https://learn.microsoft.com/training/educator-center/","g","pt"]],""],
- ["l7",2,"Design visual básico","Contraste, repetição, alinhamento e proximidade. Vale para slides, cartazes e sites.",[["l","Design para Quem Não É Designer (Robin Williams)","","p","pt"]],""],
- ["l8",2,"Vídeo e áudio para aulas","Gravar tela, editar vídeo e tratar áudio.",[["f","OBS Studio","https://obsproject.com/","g","pt"],["f","DaVinci Resolve","https://www.blackmagicdesign.com/products/davinciresolve","g","pt"],["f","Audacity","https://www.audacityteam.org/","g","pt"]],""],
- ["l9",3,"Certificações de professor","Comprovam domínio e ajudam no currículo.",[["c","Google Certified Educator (níveis 1 e 2)","https://edu.google.com/","p","pt"],["c","Microsoft Innovative Educator","https://learn.microsoft.com/training/educator-center/","g","pt"]],""]
-]},
-{id:"prof",g:"prof",name:"Professor de Educação Digital",what:"Didática, currículo e práticas para ensinar computação com qualidade.",why:"Ser um professor top é saber ensinar, não só saber o conteúdo.",steps:[
- ["m1",0,"BNCC Computação","Os três eixos: Pensamento Computacional, Mundo Digital e Cultura Digital. Conheça as habilidades da sua etapa.",[["s","Normas sobre Computação na Educação Básica — Complemento à BNCC (MEC)","https://basenacionalcomum.mec.gov.br/","g","pt"],["s","Currículo de Referência em Tecnologia e Computação (CIEB)","https://curriculo.cieb.net.br/","g","pt"]],"Mapear suas aulas atuais nas habilidades da BNCC."],
- ["m2",0,"Computação desplugada","Ensinar conceitos sem computador: binário, algoritmos, redes. Funciona em qualquer escola.",[["s","CS Unplugged","https://www.csunplugged.org/pt-br/","g","pt"]],""],
- ["m3",1,"Scratch e Code.org","Ferramentas de programação em blocos para todas as idades.",[["f","Scratch","https://scratch.mit.edu/","g","pt"],["c","Code.org","https://code.org/","g","pt"]],""],
- ["m4",1,"Aprendizagem criativa","Projetos, paixão, pares e pensar brincando.",[["l","Jardim de Infância para a Vida Toda (Mitchel Resnick)","","p","pt"],["s","Rede Brasileira de Aprendizagem Criativa","https://aprendizagemcriativa.org/","g","pt"]],""],
- ["m5",2,"Os clássicos da educação","As ideias que fundaram a computação na educação e a pedagogia brasileira.",[["l","LOGO: Computadores e Educação (Seymour Papert)","","p","pt"],["l","Pedagogia da Autonomia (Paulo Freire)","","p","pt"]],""],
- ["m6",2,"Projetos e avaliação com rubricas","Planejar por projetos e avaliar processo e produto de forma justa.",[["l","Metodologias Ativas para uma Educação Inovadora (Bacich e Moran)","","p","pt"]],"Uma rubrica para seu próximo projeto maker."],
- ["m7",2,"Cidadania digital","Privacidade, segurança, desinformação e convivência online.",[["s","SaferNet Brasil","https://new.safernet.org.br/","g","pt"],["s","Common Sense Education","https://www.commonsense.org/education","g","en"]],""],
- ["m8",3,"Olimpíadas de informática","Preparar alunos para a OBI desperta talentos.",[["s","Olimpíada Brasileira de Informática (OBI)","https://olimpiada.ic.unicamp.br/","g","pt"]],""],
- ["m9",3,"Material próprio","Site da disciplina, banco de atividades e apostilas, tudo versionado no GitHub.",[],"Site da sua disciplina publicado."],
- ["m10",4,"Compartilhar e publicar","Relatos de experiência em eventos de informática na educação.",[["s","Sociedade Brasileira de Computação (SBC)","https://www.sbc.org.br/","g","pt"]],"Submeter um relato de experiência."]
-]},
-{id:"ingles",g:"vida",name:"Inglês fluente",what:"Do nível atual até a fluência, com prática diária e conteúdo de tecnologia.",why:"A maior parte da documentação, dos cursos e das vagas boas está em inglês.",steps:[
- ["n1",0,"Medir seu nível","Faça o teste e anote o resultado. Metas sugeridas: B1 no fim de 2027, B2 no fim de 2028, C1 em 2030.",[["s","EF SET (teste gratuito)","https://www.efset.org/pt/","g","pt"]],"Anotar o nível no Diário de bordo."],
- ["n2",0,"Hábito diário de 20 a 30 minutos","Um pouco todo dia: vocabulário no Anki, um vídeo, uma leitura curta.",[["s","BBC Learning English","https://www.bbc.co.uk/learningenglish","g","en"],["f","Duolingo","https://www.duolingo.com/","gp","pt"],["f","Anki","https://apps.ankiweb.net/","g","pt"]],""],
- ["n3",1,"Base gramatical e pronúncia","Tempos verbais, phrasal verbs e os sons que brasileiros mais erram.",[["y","Mairo Vergara","yt:Mairo Vergara","g","pt"],["y","English in Brazil (Carina Fragozo)","yt:English in Brazil Carina Fragozo","g","pt"],["y","Rachel's English (pronúncia)","yt:Rachel's English","g","en"]],""],
- ["n4",1,"Aprender tecnologia em inglês","CS50, documentação e canais técnicos em inglês. Comece com legenda em inglês, não em português.",[["y","Fireship","https://www.youtube.com/@Fireship","g","en"]],""],
- ["n5",2,"Conversação","Fale toda semana. Use o modo de voz do Claude ou do Gemini para treinar, e um professor quando puder.",[["f","Modo de voz do Claude ou do Gemini","","g","en"],["c","Cambly","https://www.cambly.com/","p","en"],["c","italki","https://www.italki.com/","p","en"]],"Shadowing: repetir em voz alta trechos curtos de nativos."],
- ["n6",3,"Leitura extensiva","Livros inteiros em inglês: comece por graded readers e passe para livros técnicos.",[],"Ler 3 livros em inglês no ano."],
- ["n7",4,"Escrever em inglês","README dos seus projetos em inglês, posts e e-mails.",[],""],
- ["n8",5,"Certificação (se precisar)","Só faça se uma vaga, bolsa ou intercâmbio pedir.",[["c","TOEFL, IELTS ou Cambridge","","p","en"]],""]
-]},
-{id:"carreira",g:"vida",name:"Repertório e carreira",what:"Leitura, cultura geral, presença profissional e a transição de área.",why:"Profissional completo tem repertório e sabe para onde está indo.",steps:[
- ["o1",0,"Mapa de carreiras em tecnologia","Front-end, back-end, dados, IA, DevOps, segurança, UX e edtech. Veja os caminhos e marque os que atraem você.",[["s","roadmap.sh","https://roadmap.sh/","g","en"]],"Escolher 2 áreas candidatas para 2030."],
- ["o2",1,"Repertório: um livro por mês","Alterne técnico e geral. Comece pelo próprio Mito da Caverna.",[["l","A República, livro VII (Platão)","","gp","pt"],["l","O Mundo Assombrado pelos Demônios (Carl Sagan)","","p","pt"],["l","Mindset (Carol Dweck)","","p","pt"],["l","Sapiens (Yuval Harari)","","p","pt"]],""],
- ["o3",1,"Podcasts e canais de tecnologia em português","Para acompanhar o mercado no ônibus ou na academia.",[["y","Hipsters Ponto Tech","yt:Hipsters Ponto Tech","g","pt"],["y","Fabio Akita","yt:Fabio Akita","g","pt"],["y","Filipe Deschamps","yt:Filipe Deschamps","g","pt"],["y","Código Fonte TV","yt:Codigo Fonte TV","g","pt"]],""],
- ["o4",2,"LinkedIn e presença profissional","Perfil completo, posts sobre o que você constrói e aprende.",[],""],
- ["o5",3,"Comunidades e eventos","Python Brasil, meetups, hackathons, comunidades no Discord.",[["s","Python Brasil","https://python.org.br/","g","pt"]],""],
- ["o6",3,"Estágio ou projeto real","Experiência de verdade conta mais que certificado.",[],""],
- ["o7",4,"Portfólio com 3 projetos fortes","Um full stack, um maker ou IoT e um com IA. Cada um com README, demonstração e código limpo.",[],""],
- ["o8",5,"TCC alinhado à carreira","Escolha um tema que já seja vitrine para a área que você quer.",[],""],
- ["o9",5,"Transição de área","Currículo, entrevistas técnicas e rede de contatos.",[],""]
-]}
-];
-
-const GLOSS = [
-["Programação",[
- ["Algoritmo","Uma sequência de passos para resolver um problema. Uma receita de bolo é um algoritmo."],
- ["Linguagem de programação","Um idioma com regras rígidas para dar instruções ao computador. Exemplos: Python, JavaScript, C."],
- ["Lógica de programação","O raciocínio por trás do código: condições, repetições, variáveis. Vale para todas as linguagens."],
- ["Variável","Um nome que guarda um valor, como uma caixa com etiqueta."],
- ["Função","Um bloco de código com nome que você pode reutilizar."],
- ["Sintaxe","As regras de escrita de uma linguagem, como a gramática de um idioma."],
- ["Bug e depuração (debug)","Bug é um erro no programa. Depurar é encontrar e corrigir esse erro."],
- ["Biblioteca","Código pronto que você importa para não reinventar a roda. Exemplo: pandas."],
- ["Framework","Uma estrutura pronta que dita como organizar o seu projeto. Exemplos: React, Django, Next.js."],
- ["Compilador e interpretador","Programas que traduzem o seu código para o computador executar. C é compilado; Python é interpretado."],
- ["Orientação a objetos","Organizar o código em objetos com dados e comportamentos, como “Aluno” com nome e notas."]
-]],
-["Ferramentas",[
- ["Editor de código e IDE","Programa onde você escreve código. VS Code é um editor; IDEs como PyCharm trazem mais recursos."],
- ["Terminal (linha de comando)","Uma janela onde você dá ordens ao computador por texto. No Mac, o app Terminal usa zsh."],
- ["Git","Programa que guarda o histórico do seu código, como um “salvar versões” poderoso."],
- ["GitHub","Site que hospeda repositórios Git, permite colaborar e funciona como portfólio."],
- ["Repositório (repo)","A pasta de um projeto com todo o seu histórico no Git."],
- ["Commit e push","Commit é salvar uma versão. Push é enviar essas versões para o GitHub."],
- ["Markdown","Um jeito simples de formatar texto com símbolos. # vira título, **texto** vira negrito."],
- ["Docker","Empacota um programa e tudo de que ele precisa para rodar igual em qualquer máquina."]
-]],
-["Web",[
- ["Front-end","A parte que a pessoa vê e usa: telas, botões, layout. Feito com HTML, CSS e JavaScript."],
- ["Back-end","A parte que roda no servidor: regras, banco de dados, login."],
- ["Full stack","Quem trabalha nas duas partes, front-end e back-end."],
- ["HTML","A estrutura da página: títulos, parágrafos, imagens, links."],
- ["CSS","O visual da página: cores, fontes, espaçamento, layout."],
- ["JavaScript","A linguagem que dá comportamento à página: cliques, animações, buscar dados."],
- ["TypeScript","JavaScript com tipos, que avisa erros antes de rodar."],
- ["React","Biblioteca JavaScript para construir interfaces em componentes reutilizáveis."],
- ["Node.js","Permite rodar JavaScript fora do navegador, no servidor."],
- ["API","Um “cardápio” de pedidos que um sistema aceita de outro. O app do tempo pede dados a uma API de meteorologia."],
- ["HTTP","O protocolo de conversa entre navegador e servidor."],
- ["JSON","Formato de texto para trocar dados entre sistemas, com chaves e valores."],
- ["Deploy e hospedagem","Deploy é colocar o sistema no ar. Hospedagem é onde ele fica: Vercel, Render, GitHub Pages."],
- ["Domínio","O endereço do site, como seunome.com.br."],
- ["Responsivo","Site que se adapta ao celular, ao tablet e ao computador."],
- ["PWA","Site que pode ser instalado como app e funcionar offline."]
-]],
-["Dados",[
- ["Banco de dados","Lugar organizado para guardar informações de um sistema."],
- ["SQL","Linguagem para consultar e alterar bancos de dados relacionais (em tabelas)."],
- ["PostgreSQL e MySQL","Dois dos bancos de dados relacionais mais usados."],
- ["Nuvem (cloud)","Usar computadores de empresas como AWS, Google Cloud e Azure pela internet."],
- ["Estrutura de dados","Forma de organizar dados na memória: listas, filas, pilhas, árvores, grafos."],
- ["Big O","Notação que mede como o tempo de um algoritmo cresce quando os dados aumentam."]
-]],
-["Inteligência Artificial",[
- ["IA (Inteligência Artificial)","Área que faz computadores realizarem tarefas que parecem exigir inteligência."],
- ["Machine Learning","Parte da IA em que o computador aprende padrões a partir de exemplos, em vez de regras escritas à mão."],
- ["Rede neural","Modelo de Machine Learning inspirado de forma livre no cérebro, com camadas de “neurônios” matemáticos."],
- ["LLM (modelo de linguagem)","Modelo treinado com muito texto que gera respostas. Claude, Gemini e o GPT são LLMs."],
- ["Prompt","A instrução que você escreve para a IA. Prompt bom: contexto, tarefa, formato e exemplos."],
- ["Alucinação","Quando a IA afirma algo falso com confiança. Por isso sempre verifique."],
- ["RAG","Técnica em que a IA busca nos seus documentos antes de responder."],
- ["Agente","IA que usa ferramentas e executa várias etapas sozinha para cumprir uma tarefa."],
- ["MCP","Model Context Protocol: padrão que conecta IAs a ferramentas e dados."]
-]],
-["Maker e hardware",[
- ["Hardware e software","Hardware é a parte física; software são os programas."],
- ["CPU e memória RAM","CPU é o processador, que executa instruções. RAM é a memória de trabalho, rápida e temporária."],
- ["Sistema operacional","O programa base que gerencia o computador: macOS, Windows, Linux, Android."],
- ["Microcontrolador","Um computador minúsculo num chip, feito para controlar coisas. Está no Arduino e no micro:bit."],
- ["micro:bit","Placa educacional com LEDs, botões e sensores, programável em blocos (MakeCode) ou Python."],
- ["Arduino","Plataforma de placas com microcontrolador para ligar sensores, LEDs e motores, programada em C/C++."],
- ["ESP32","Microcontrolador barato com Wi-Fi e Bluetooth, ideal para Internet das Coisas."],
- ["Raspberry Pi","Computador completo do tamanho de um cartão que roda Linux."],
- ["Protoboard","Placa com furos para montar circuitos sem solda."],
- ["Sensor e atuador","Sensor lê o mundo (luz, distância). Atuador age no mundo (motor, LED, buzzer)."],
- ["IoT","Internet das Coisas: objetos conectados que enviam e recebem dados."],
- ["CAD","Desenho assistido por computador. Tinkercad, Onshape e Fusion são ferramentas de CAD."],
- ["Paramétrico","Modelo 3D baseado em medidas e regras que você pode alterar depois."],
- ["STL e 3MF","Formatos de arquivo de modelos 3D. O 3MF guarda também cores e configurações."],
- ["Fatiador (slicer)","Programa que transforma o modelo 3D em instruções para a impressora. O seu é o Bambu Studio."],
- ["Vetor (SVG)","Imagem feita de linhas e curvas matemáticas, sem perder qualidade. É o que a máquina de corte usa."]
-]]
-];
-
-const ROUTINE = [
- ["Seg","25 min","1h · Lógica e Python, depois algoritmos","—"],
- ["Ter","25 min","1h · Web (front-end, depois back-end)","—"],
- ["Qua","25 min","1h · Maker: micro:bit, Arduino ou 3D","—"],
- ["Qui","25 min","1h · Disciplinas da faculdade ou revisão","—"],
- ["Sex","25 min","1h · Professor: Google, Office, Canva ou didática aplicada à próxima aula","—"],
- ["Sáb","25 min","—","2 a 3h · Projeto prático (o que estiver na fase atual)"],
- ["Dom","—","—","30 min · Revisão da semana e planejamento. O resto é descanso."]
-];
-
-const LS_KEY = "projeto-perfeicao-v1";
-let state = {done:{}, goals:[], log:[], updated:0};
-let dbRef = null, writing = false, dirty = false, saveTimer = null, cloud = false;
-try { const raw = localStorage.getItem(LS_KEY); if (raw) { const s = JSON.parse(raw); if (s && typeof s === "object") state = normalize(s); } } catch(e) {}
-
-function normalize(s){
-  return {done: (s.done && typeof s.done === "object") ? {...s.done} : {},
-          goals: Array.isArray(s.goals) ? s.goals.slice(0,300).map(g=>({...g})) : [],
-          log: Array.isArray(s.log) ? s.log.slice(0,300).map(l=>({...l})) : [],
-          updated: Number(s.updated)||0};
-}
-function saveLocal(){ try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {} }
-function touch(){
-  state.updated = Date.now(); saveLocal(); dirty = true;
-  if (dbRef){ setSync("busy","Salvando…"); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
-}
-async function flush(){
-  if (!dbRef || writing || !dirty) return;
-  writing = true; dirty = false;
-  try { await dbRef.set(JSON.parse(JSON.stringify(state))); setSync("cloud","Salvo na sua conta"); }
-  catch(e){
-    if (e && e.code === "invalid_argument"){ dbRef = null; cloud = false; setSync("","Salvo só neste navegador"); }
-    else { dirty = true; setSync("busy","Não salvou ainda, tentando de novo"); setTimeout(flush, 3000 + Math.random()*2000); }
-  }
-  writing = false;
-  if (dirty && dbRef) flush();
-}
-function setSync(cls, txt){ const el = document.getElementById("sync"); el.className = "sync " + cls; el.lastElementChild.textContent = txt; }
-
-async function connectDb(){
-  if (!window.claude || typeof window.claude.use !== "function") return;
-  let db = null;
-  try { db = await window.claude.use("db"); } catch(e) { db = null; }
-  if (!db) return;
-  let ref;
-  try { ref = db.doc("progress/main"); } catch(e){ return; }
-  setSync("busy","Conectando à sua conta…");
-  const timer = setTimeout(()=>setSync("", "Sem conexão com a conta, salvo neste navegador"), 10000);
-  let first = true;
-  ref.onSnapshot(snap => {
-    if (snap.metadata && snap.metadata.fromCache === false) clearTimeout(timer);
-    if (snap.metadata && snap.metadata.hasPendingWrites) return;
-    dbRef = ref; cloud = true;
-    if (snap.exists){
-      const remote = normalize(snap.data() || {});
-      if (remote.updated > state.updated){ state = remote; saveLocal(); render(); }
-      else if (first && state.updated > remote.updated){ dirty = true; flush(); }
-    } else if (first && state.updated > 0){ dirty = true; flush(); }
-    if (!writing && !dirty) setSync("cloud","Salvo na sua conta");
-    first = false;
-  }, err => { clearTimeout(timer); dbRef = null; cloud = false; setSync("", "Salvo só neste navegador"); });
-}
-
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-const ALL = []; TRACKS.forEach((t,ti)=>t.steps.forEach(s=>ALL.push({id:s[0],f:s[1],t:s[2],d:s[3],r:s[4],p:s[5],track:t,ti})));
-const byId = Object.fromEntries(ALL.map(s=>[s.id,s]));
-const isDone = id => !!state.done[id];
-const trackPct = t => { const n=t.steps.length, d=t.steps.filter(s=>isDone(s[0])).length; return {n,d,p:Math.round(100*d/n)}; };
-function currentPhase(){ const today = new Date().toISOString().slice(0,10); for (let i=0;i<PHASES.length;i++) if (today <= PHASES[i].end) return i; return PHASES.length-1; }
-function monthsTo(dateStr){ const a=new Date(), b=new Date(dateStr+"T12:00:00"); return Math.max(0,(b.getFullYear()-a.getFullYear())*12 + (b.getMonth()-a.getMonth())); }
-function url(u){ if (!u) return ""; if (u.startsWith("yt:")) return "https://www.youtube.com/results?search_query="+encodeURIComponent(u.slice(3)); return u; }
-const TYPE = {c:"Curso",y:"YouTube",l:"Livro",f:"Ferramenta",s:"Site / doc"};
-const COST = {g:["g","Grátis"],p:["p","Pago"],gp:["g","Grátis · opção paga"]};
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("on"),1800); }
-function fmtDate(iso){ if(!iso) return ""; const [y,m,d]=iso.split("-"); return `${d}/${m}/${y}`; }
-
-function chk(id, label, extra=""){
-  const d = isDone(id);
-  return `<label class="chk" for="ck-${extra}${id}"><input type="checkbox" id="ck-${extra}${id}" data-step="${id}" ${d?"checked":""}><span class="${d?"done-title":""}">${label}</span></label>`;
-}
-
-let selTrack = TRACKS[0].id, selPhase = -1, glossQ = "";
-
-function viewHome(){
-  const total = ALL.length, done = ALL.filter(s=>isDone(s.id)).length, cp = currentPhase(), ph = PHASES[cp];
-  const next = ALL.filter(s=>!isDone(s.id) && s.f<=cp).sort((a,b)=>a.f-b.f || a.ti-b.ti).slice(0,7);
-  const nextMore = next.length ? "" : ALL.filter(s=>!isDone(s.id)).sort((a,b)=>a.f-b.f).slice(0,5);
-  const list = next.length ? next : (nextMore||[]);
-  return `
-  <section class="grid" style="gap:10px">
-    <h1>Seu Projeto Perfeição</h1>
-    <p class="lead">Um mapa em ordem, do primeiro passo até a formatura em 2030. Marque cada etapa concluída. Siga a fase atual, faça um pouco todo dia e revise todo mês.</p>
-  </section>
-  <section class="stats sec" aria-label="Resumo">
-    <div class="stat"><div class="n">${Math.round(100*done/total)}%</div><div class="l">do caminho completo</div><div class="bar" style="margin-top:10px"><span style="width:${100*done/total}%"></span></div></div>
-    <div class="stat"><div class="n">${done}<span class="muted" style="font-size:20px"> / ${total}</span></div><div class="l">etapas concluídas</div></div>
-    <div class="stat"><div class="n">${ph.n.replace("Fase ","F")}</div><div class="l">${esc(ph.t)} · ${esc(ph.p)}</div></div>
-    <div class="stat"><div class="n">${monthsTo(GRAD)}</div><div class="l">meses até a formatura (meados de 2030)</div></div>
-  </section>
-  <section class="two sec">
-    <div class="card">
-      <h2>Próximos passos</h2>
-      <p class="muted small" style="margin:4px 0 8px">As etapas pendentes da fase atual e das anteriores, em ordem. Faça uma de cada vez.</p>
-      <ul class="next">${list.map(s=>`<li>${chk(s.id, `<b>${esc(s.t)}</b><br><span class="small muted">${esc(s.track.name)} · ${PHASES[s.f].n}</span>`, "h-")}</li>`).join("") || `<li>Tudo da fase atual concluído. Puxe etapas da próxima fase na Linha do tempo.</li>`}</ul>
-    </div>
-    <div class="card">
-      <h2>Progresso por trilha</h2>
-      <div style="margin-top:8px">${TRACKS.map((t,i)=>{const p=trackPct(t);return `<a class="trow" href="#trilhas" data-goto="${t.id}"><span class="num">${String(i+1).padStart(2,"0")}</span><span><span class="tname">${esc(t.name)}</span><div class="bar" style="margin-top:4px"><span style="width:${p.p}%;background:${TC[t.g]}"></span></div></span><span class="pct">${p.d}/${p.n}</span></a>`}).join("")}</div>
-    </div>
-  </section>
-  <section class="two sec">
-    <div class="card">
-      <h2>Regras de ouro para estudar com IA</h2>
-      <ol class="rules" style="margin-top:10px">
-        <li><b>Tente sozinho primeiro</b>, por 20 a 30 minutos. A luta é onde o aprendizado acontece.</li>
-        <li><b>Peça explicação, dicas e perguntas</b>, não a solução pronta.</li>
-        <li><b>Nunca use código que você não sabe explicar linha por linha.</b></li>
-        <li><b>Depois de usar IA, refaça sem ela.</b> Se não conseguir, ainda não aprendeu.</li>
-        <li><b>Use a IA para criar provas para você</b>: exercícios, quizzes, flashcards.</li>
-        <li><b>Verifique fatos e fontes.</b> IA erra com confiança.</li>
-        <li><b>Dados de alunos nunca entram em IA.</b></li>
-      </ol>
-    </div>
-    <div class="card">
-      <h2>Prompt de tutor</h2>
-      <p class="muted small" style="margin-top:4px">Cole no início de uma conversa ou nas instruções de um Projeto no Claude.</p>
-      <pre class="prompt" id="tutor">Você é meu tutor de [TEMA]. Sou estudante de Ciência da Computação e professor de Educação Digital.
-Não me dê a resposta pronta. Primeiro me pergunte o que eu já sei.
-Depois me dê dicas em níveis, da mais leve à mais forte.
-Só mostre a solução completa quando eu escrever "mostrar solução".
-No fim, me passe 3 exercícios parecidos e corrija as minhas respostas.</pre>
-      <button class="btn ghost" data-copy="tutor">Copiar prompt</button>
-    </div>
-  </section>
-  <section class="card sec">
-    <h2>Como usar este site</h2>
-    <ul class="rules" style="margin-top:10px">
-      <li><b>Trilhas</b>: cada área em ordem de estudo, com cursos, canais, livros e ferramentas. Verde é grátis, laranja é pago.</li>
-      <li><b>Linha do tempo</b>: o que fazer em cada fase até 2030, juntando todas as trilhas.</li>
-      <li><b>Glossário</b>: o que significa cada nome. Volte aqui sempre que um termo confundir você.</li>
-      <li><b>Metas e diário</b>: suas metas com prazo e um registro do que aprendeu. É isso que permite ao Claude acompanhar você.</li>
-      <li>Não precisa seguir à risca. Adiantar uma etapa de outra fase está ótimo; pular os fundamentos não está.</li>
-    </ul>
-  </section>`;
-}
-
-function stepCard(s){
-  const d = isDone(s.id);
-  const res = s.r.map(r=>{
-    const [ty,name,u,cost,lang]=r, c=COST[cost]||COST.g, href=url(u);
-    const nm = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(name)}</a>` : `<span>${esc(name)}</span>`;
-    return `<li><span class="rtype">${TYPE[ty]||""}</span>${nm} <span class="pill ${c[0]}">${c[1]}</span> <span class="pill l">${esc(lang)}</span></li>`;
-  }).join("");
-  return `<article class="step ${d?"isdone":""}">
-    ${chk(s.id, `<strong class="stitle">${esc(s.t)}</strong>`)}
-    <div style="padding-left:34px">
-      <div class="meta"><span class="pill">${PHASES[s.f].n} · ${esc(PHASES[s.f].p)}</span></div>
-      <p class="desc">${esc(s.d)}</p>
-      ${res?`<ul class="res">${res}</ul>`:""}
-      ${s.p?`<p class="proj"><b>Prática:</b> ${esc(s.p)}</p>`:""}
-    </div>
-  </article>`;
-}
-
-function viewTracks(){
-  const t = TRACKS.find(x=>x.id===selTrack) || TRACKS[0], ti = TRACKS.indexOf(t), p = trackPct(t);
-  const steps = ALL.filter(s=>s.track===t && (selPhase<0 || s.f===selPhase));
-  const phasesIn = [...new Set(t.steps.map(s=>s[1]))].sort();
-  return `<div class="tracks">
-    <aside class="card tlist" style="padding:8px">
-      ${TRACKS.map((x,i)=>{const q=trackPct(x);return `<button data-track="${x.id}" aria-pressed="${x.id===t.id}"><span class="num">${String(i+1).padStart(2,"0")}</span><span class="tname">${esc(x.name)}</span><span class="pct">${q.p}%</span></button>`}).join("")}
-    </aside>
-    <section>
-      <div class="card thead" style="--tc:${TC[t.g]}">
-        <span class="num">Trilha ${String(ti+1).padStart(2,"0")} de ${TRACKS.length}</span>
-        <h1 style="font-size:32px;margin-top:4px">${esc(t.name)}</h1>
-        <p style="margin-top:8px;max-width:70ch"><b>O que é:</b> ${esc(t.what)}</p>
-        <p style="margin-top:6px;max-width:70ch" class="muted"><b>Por que importa:</b> ${esc(t.why)}</p>
-        <div style="display:flex;gap:12px;align-items:center;margin-top:12px"><div class="bar" style="flex:1;max-width:320px"><span style="width:${p.p}%;background:${TC[t.g]}"></span></div><span class="pct">${p.d} de ${p.n} etapas</span></div>
-      </div>
-      <div class="filters" role="group" aria-label="Filtrar por fase">
-        <button data-phase="-1" aria-pressed="${selPhase<0}">Todas as fases</button>
-        ${phasesIn.map(f=>`<button data-phase="${f}" aria-pressed="${selPhase===f}">${PHASES[f].n} · ${esc(PHASES[f].p)}</button>`).join("")}
-      </div>
-      <div class="grid">${steps.map(stepCard).join("") || `<p class="muted">Nenhuma etapa desta trilha nesta fase.</p>`}</div>
-    </section>
-  </div>`;
-}
-
-function viewTimeline(){
-  const cp = currentPhase();
-  return `<section class="grid" style="gap:10px"><h1>Linha do tempo até 2030</h1>
-  <p class="lead">Seis fases. Cada fase junta etapas de várias trilhas para você avançar em tudo ao mesmo tempo, sem pular fundamentos. A fase atual está destacada.</p></section>
-  <div class="grid sec" style="gap:28px">
-  ${PHASES.map((ph,i)=>{
-    const st = ALL.filter(s=>s.f===i), d = st.filter(s=>isDone(s.id)).length;
-    const groups = TRACKS.map(t=>({t,items:st.filter(s=>s.track===t)})).filter(g=>g.items.length);
-    return `<section class="phase ${i===cp?"now":(i<cp?"past":"")}" id="fase-${i}">
-      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><h2>${ph.n} · ${esc(ph.t)}</h2><span class="pill">${esc(ph.p)}</span>${i===cp?'<span class="pill p">Você está aqui</span>':""}<span class="pct muted">${d}/${st.length}</span></div>
-      <p class="muted" style="margin-top:6px;max-width:75ch">${esc(ph.g)}</p>
-      <div class="pgroup">${groups.map(g=>`<div class="card"><div class="tlabel" style="--tc:${TC[g.t.g]}"><i></i>${esc(g.t.name)}</div>${g.items.map(s=>chk(s.id, esc(s.t), "t-")).join("")}</div>`).join("")}</div>
-    </section>`;}).join("")}
-  </div>`;
-}
-
-function glossList(){
-  const q = glossQ.trim().toLowerCase();
-  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
-  const nq = norm(q);
-  let out = "";
-  GLOSS.forEach(([cat,items])=>{
-    const f = items.filter(([t,d])=>!nq || norm(t).includes(nq) || norm(d).includes(nq));
-    if (f.length) out += `<div class="gcat">${esc(cat)}</div>` + f.map(([t,d])=>`<dl class="card" style="margin:0;padding:14px"><dt>${esc(t)}</dt><dd>${esc(d)}</dd></dl>`).join("");
-  });
-  return out || `<p class="muted">Nenhum termo encontrado. Pergunte ao Claude e anote no Diário de bordo.</p>`;
-}
-function viewGlossary(){
-  return `<section class="grid" style="gap:10px"><h1>Glossário</h1>
-  <p class="lead">Os nomes que mais confundem, explicados em uma ou duas frases. Comece por aqui antes de qualquer trilha.</p>
-  <label for="gq" class="small muted">Buscar termo</label>
-  <input id="gq" class="search" type="search" placeholder="Ex.: API, Git, framework" value="${esc(glossQ)}"></section>
-  <div class="gloss" id="glist">${glossList()}</div>`;
-}
-
-function viewRoutine(){
-  return `<section class="grid" style="gap:10px"><h1>Rotina semanal</h1>
-  <p class="lead">Cerca de 8 a 10 horas por semana além da faculdade e do trabalho. Constância vence intensidade. Ajuste ao seu horário real e bloqueie no Google Agenda.</p></section>
-  <div class="tablewrap sec"><table>
-    <thead><tr><th>Dia</th><th>Inglês</th><th>Bloco técnico</th><th>Projeto e revisão</th></tr></thead>
-    <tbody>${ROUTINE.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("")}</tbody>
-  </table></div>
-  <section class="two sec">
-    <div class="card"><h2>Como fazer cada bloco de 1 hora</h2>
-      <ol class="rules" style="margin-top:10px">
-        <li>5 min: revise no Anki o que viu antes.</li>
-        <li>40 min: estude ou pratique, sem celular.</li>
-        <li>10 min: explique em voz alta ou por escrito o que aprendeu, sem olhar.</li>
-        <li>5 min: marque a etapa aqui e anote uma linha no Diário de bordo.</li>
-      </ol></div>
-    <div class="card"><h2>Regras da rotina</h2>
-      <ul class="rules" style="margin-top:10px">
-        <li>Semana de provas da faculdade: só inglês e revisão. A faculdade vem primeiro.</li>
-        <li>Perdeu um dia? Não compense dobrando. Só não perca dois seguidos.</li>
-        <li>Férias: avance a trilha que mais atrasou ou faça um projeto maior.</li>
-        <li>Descanso e sono fazem parte do treino. Cérebro cansado não fixa conteúdo.</li>
-      </ul></div>
-  </section>`;
-}
-
-function viewGoals(){
-  const areas = ["Geral",...TRACKS.map(t=>t.name)];
-  const goals = state.goals.slice().sort((a,b)=>(a.done?1:0)-(b.done?1:0) || String(a.due||"9999").localeCompare(String(b.due||"9999")));
-  return `<section class="grid" style="gap:10px"><h1>Metas e diário de bordo</h1>
-  <p class="lead">Metas com prazo transformam o plano em ação. O diário mostra sua evolução e permite ao Claude acompanhar você nas próximas conversas.</p></section>
-  <section class="card sec"><h2>Suas metas</h2>
-    <form id="gform" class="form" style="margin-top:12px">
-      <label class="f" for="g-text">Meta<input id="g-text" required maxlength="200" placeholder="Ex.: Terminar o Mundo 1 de Python"></label>
-      <label class="f" for="g-due">Prazo<input id="g-due" type="date"></label>
-      <label class="f" for="g-area">Área<select id="g-area">${areas.map(a=>`<option>${esc(a)}</option>`).join("")}</select></label>
-      <button class="btn" type="submit">Adicionar meta</button>
-    </form>
-    <div style="margin-top:12px">${goals.length?goals.map(g=>`<div class="goal"><label class="chk" for="gl-${esc(g.id)}"><input type="checkbox" id="gl-${esc(g.id)}" data-goal="${esc(g.id)}" ${g.done?"checked":""}><span class="${g.done?"done-title":""}"><b>${esc(g.text)}</b><br><span class="small muted">${esc(g.area||"Geral")}${g.due?" · até "+fmtDate(g.due):""}</span></span></label><button class="x" data-delgoal="${esc(g.id)}" aria-label="Remover meta">Remover</button></div>`).join(""):`<p class="muted">Nenhuma meta ainda. Sugestão para começar: “Fazer o teste de inglês EF SET até o fim do mês”.</p>`}</div>
-  </section>
-  <section class="card sec"><h2>Diário de bordo</h2>
-    <form id="lform" style="margin-top:12px;display:grid;gap:10px">
-      <label class="f" for="l-text">O que aprendi, o que travou, o que vou fazer
-      <textarea id="l-text" maxlength="2000" placeholder="Ex.: Entendi laços for. Travei em listas dentro de listas. Amanhã: 5 exercícios no Beecrowd."></textarea></label>
-      <div><button class="btn" type="submit">Salvar entrada</button></div>
-    </form>
-    <div style="margin-top:12px">${state.log.length?state.log.map(l=>`<div class="logitem"><time>${esc(new Date(l.at).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}))}</time><p style="white-space:pre-wrap;margin-top:2px">${esc(l.text)}</p></div>`).join(""):`<p class="muted">Nenhuma entrada ainda.</p>`}</div>
-  </section>`;
-}
-
-function viewBackup(){
-  return `<section class="grid" style="gap:10px"><h1>Backup do progresso</h1>
-  <p class="lead">Aberto pelo Claude, o seu progresso fica salvo na sua conta e aparece em qualquer aparelho. Se você publicar este site no GitHub Pages, ele salva no navegador. Use o backup para levar o progresso de um lugar para o outro.</p></section>
-  <section class="two sec">
-    <div class="card"><h2>Exportar</h2><p class="muted small" style="margin-top:4px">Copie e guarde num arquivo ou no Drive.</p>
-      <textarea id="exp" readonly style="margin-top:10px;font-family:var(--mono);font-size:12px">${esc(JSON.stringify(state))}</textarea>
-      <button class="btn ghost" data-copy="exp" style="margin-top:8px">Copiar backup</button></div>
-    <div class="card"><h2>Importar</h2><p class="muted small" style="margin-top:4px">Cole um backup. Ele substitui o progresso atual.</p>
-      <textarea id="imp" style="margin-top:10px;font-family:var(--mono);font-size:12px" placeholder='{"done":{...},"goals":[...],"log":[...]}'></textarea>
-      <button class="btn" id="doimp" style="margin-top:8px">Importar backup</button></div>
-  </section>
-  <section class="card sec"><h2>Recomeçar do zero</h2><p class="muted small" style="margin-top:4px">Apaga etapas, metas e diário. Exporte antes.</p>
-    <div id="resetbox" style="margin-top:10px"><button class="btn danger" id="reset1">Apagar todo o progresso</button></div></section>`;
-}
-
-const VIEWS = {"inicio":viewHome,"trilhas":viewTracks,"linha-do-tempo":viewTimeline,"glossario":viewGlossary,"rotina":viewRoutine,"metas":viewGoals,"backup":viewBackup};
-function curView(){ const h = location.hash.slice(1); return VIEWS[h] ? h : "inicio"; }
-function render(){
-  const v = curView();
-  document.querySelectorAll("#tabs a").forEach(a=>{ if (a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
-  const y = window.scrollY;
-  $("#view").innerHTML = VIEWS[v]();
-  window.scrollTo(0,y);
-}
-
-document.addEventListener("change", e=>{
-  const el = e.target;
-  if (el.dataset.step){ const id = el.dataset.step; if (el.checked) state.done[id] = Date.now(); else delete state.done[id]; touch(); render(); if (el.checked) toast("Etapa concluída. Continue assim!"); }
-  if (el.dataset.goal){ const g = state.goals.find(x=>x.id===el.dataset.goal); if (g){ g.done = el.checked; touch(); render(); } }
-});
-document.addEventListener("click", async e=>{
-  const b = e.target.closest("[data-track],[data-phase],[data-goto],[data-copy],[data-delgoal],#doimp,#reset1,#reset2,#reset0");
-  if (!b) return;
-  if (b.dataset.track){ selTrack = b.dataset.track; selPhase = -1; render(); window.scrollTo(0,0); }
-  else if (b.dataset.phase !== undefined){ selPhase = Number(b.dataset.phase); render(); }
-  else if (b.dataset.goto){ selTrack = b.dataset.goto; selPhase = -1; window.scrollTo(0,0); if (curView()==="trilhas") render(); }
-  else if (b.dataset.copy){ const src = document.getElementById(b.dataset.copy); const txt = src.value ?? src.textContent; try { await navigator.clipboard.writeText(txt); toast("Copiado"); } catch(err){ if (src.select) src.select(); toast("Selecionei o texto: copie com Cmd+C"); } }
-  else if (b.dataset.delgoal){ state.goals = state.goals.filter(g=>g.id!==b.dataset.delgoal); touch(); render(); }
-  else if (b.id==="doimp"){
-    try { const s = JSON.parse($("#imp").value); if (!s || typeof s!=="object" || !s.done) throw 0; state = normalize(s); touch(); render(); toast("Backup importado"); }
-    catch(err){ toast("Não reconheci esse backup. Cole o texto completo que você exportou."); }
-  }
-  else if (b.id==="reset1"){ $("#resetbox").innerHTML = `<p style="margin-bottom:8px"><b>Tem certeza?</b> Isso não pode ser desfeito.</p><button class="btn danger" id="reset2">Sim, apagar tudo</button> <button class="btn ghost" id="reset0">Cancelar</button>`; }
-  else if (b.id==="reset0"){ render(); }
-  else if (b.id==="reset2"){ state = {done:{},goals:[],log:[],updated:0}; touch(); render(); toast("Progresso apagado"); }
-});
-document.addEventListener("submit", e=>{
-  e.preventDefault();
-  if (e.target.id==="gform"){
-    const text = $("#g-text").value.trim(); if (!text) return;
-    state.goals.push({id:"g"+Date.now().toString(36), text, due:$("#g-due").value||"", area:$("#g-area").value, done:false, at:Date.now()});
-    touch(); render(); toast("Meta adicionada");
-  }
-  if (e.target.id==="lform"){
-    const text = $("#l-text").value.trim(); if (!text) return;
-    state.log.unshift({at:Date.now(), text}); state.log = state.log.slice(0,300);
-    touch(); render(); toast("Entrada salva");
-  }
-});
-document.addEventListener("input", e=>{ if (e.target.id==="gq"){ glossQ = e.target.value; $("#glist").innerHTML = glossList(); } });
-window.addEventListener("hashchange", ()=>{ render(); window.scrollTo(0,0); });
-
-render();
-connectDb();
-</script>
+<script src="data.js"></script>
+<script src="labs-1.js"></script>
+<script src="labs-2.js" onerror="void 0"></script>
+<script src="labs-3.js" onerror="void 0"></script>
+<script src="labs-4.js" onerror="void 0"></script>
+<script src="labs-5.js" onerror="void 0"></script>
+<script src="labs-6.js" onerror="void 0"></script>
+<script src="app.js"></script>
+<script>boot();</script>
 <script src="drive-sync.js"></script>
 </body>
 </html>
