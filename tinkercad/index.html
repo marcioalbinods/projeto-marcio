@@ -219,13 +219,20 @@ const KEYS=[['Setas','Mover em X/Y','B3'],['Ctrl/Cmd + ↑ ↓','Mover em Z','B3
 const ALL=[];M.forEach(m=>m.L.forEach((l,i)=>{l.id=m.id+(i+1);l.m=m;l.i=i;ALL.push(l)}));
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let S={done:{},ev:{},quiz:{},last:'a1'};
+let S={done:{},ev:{},quiz:{},last:'a1',updated:0};
 let cur='a1',db=null,ref=null,saving=false,pending=false,tmr=null;
 
 function lsGet(){try{const v=localStorage.getItem('tk-trilha');return v?JSON.parse(v):null}catch(e){return null}}
 function lsSet(){try{localStorage.setItem('tk-trilha',JSON.stringify(S))}catch(e){}}
-function norm(o){o=o||{};return{done:o.done||{},ev:o.ev||{},quiz:o.quiz||{},last:o.last||'a1'}}
-function save(){lsSet();clearTimeout(tmr);tmr=setTimeout(push,700)}
+function norm(o){o=o||{};return{done:o.done||{},ev:o.ev||{},quiz:o.quiz||{},last:o.last||'a1',updated:Number(o.updated)||0}}
+function save(){S.updated=Date.now();lsSet();clearTimeout(tmr);tmr=setTimeout(push,700);if(drv){clearTimeout(dTmr);dTmr=setTimeout(dPush,1500)}}
+/* Google Drive: usa a mesma conexão do site principal (Backup) e guarda a trilha no campo tk do mesmo arquivo */
+let drv=null,dTmr=null,dBusy=false,dAgain=false;
+try{drv=JSON.parse(localStorage.getItem('pp-drive')||'null')}catch(e){drv=null}
+async function dCall(body){const r=await fetch(drv.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({},body,{key:drv.key}))});if(!r.ok)throw new Error('http');const j=await r.json();if(!j.ok)throw new Error(j.error||'erro');return j}
+function dFail(e){setStore(e&&e.message==='chave'?'A chave do Google Drive não confere. Conecte de novo na seção Backup do site principal.':'Sem conexão com o Google Drive agora. O progresso fica neste navegador e sobe quando a conexão voltar.')}
+async function dPull(){if(!drv)return;try{setStore('Sincronizando com o Google Drive…');const j=await dCall({action:'get'});const rt=j.data&&j.data.tk;const ru=rt?Number(rt.updated)||0:0;if(rt&&ru>S.updated){S=norm(rt);lsSet();go(location.hash.slice(1)||S.last,false)}else if(S.updated>ru){await dPush();return}setStore('Progresso salvo no Google Drive: aparece em qualquer aparelho conectado.')}catch(e){dFail(e)}}
+async function dPush(){if(!drv)return;if(dBusy){dAgain=true;return}dBusy=true;try{setStore('Salvando no Google Drive…');const j=await dCall({action:'get'});const data=(j.data&&typeof j.data==='object')?j.data:{};const rt=data.tk;if(rt&&(Number(rt.updated)||0)>S.updated){S=norm(rt);lsSet();go(location.hash.slice(1)||S.last,false)}else{data.tk=JSON.parse(JSON.stringify(S));await dCall({action:'set',data})}setStore('Progresso salvo no Google Drive: aparece em qualquer aparelho conectado.')}catch(e){dFail(e);if(!(e&&e.message==='chave'))setTimeout(dPush,8000)}dBusy=false;if(dAgain){dAgain=false;dPush()}}
 async function push(){if(!ref)return;if(saving){pending=true;return}saving=true;try{await ref.set(JSON.parse(JSON.stringify(S)));setStore('Progresso salvo na sua conta: aparece em qualquer dispositivo em que você abrir esta página.')}catch(e){setStore('Não consegui salvar na conta agora; o progresso está guardado neste navegador.')}saving=false;if(pending){pending=false;push()}}
 function setStore(t){$('#store').textContent=t}
 
@@ -344,7 +351,10 @@ const ls=lsGet();if(ls)S=norm(ls);
 go(location.hash.slice(1)||S.last,false);
 setStore('Progresso guardado neste navegador. Conectando à sua conta…');
 (async()=>{
- if(typeof claude==='undefined'||!claude||typeof claude.use!=='function'){setStore('Progresso guardado neste navegador. Para levar para outro dispositivo, use “Copiar backup” e cole lá em “Restaurar”.');return}
+ if(typeof claude==='undefined'||!claude||typeof claude.use!=='function'){
+  if(drv){dPull();addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!dBusy)dPull()})}
+  else document.getElementById('store').innerHTML='Progresso guardado só neste navegador. Para sincronizar em todos os aparelhos, <a href="../#backup">conecte o Google Drive na seção Backup do site principal</a> e depois recarregue esta página.';
+  return}
  try{
   const [d,u,sm]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('sample')]);
   if(sm){sample=sm;const t=$('#tutor');if(t)t.hidden=false}

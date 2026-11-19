@@ -39,7 +39,13 @@
     pushing = true;
     try {
       setSync("busy", "Salvando no Drive…");
-      await call({ action: "set", data: JSON.parse(JSON.stringify(state)) });
+      var data = JSON.parse(JSON.stringify(state));
+      try {
+        var cur = await call({ action: "get" });
+        var rt = cur.data && cur.data.tk, lt = data.tk;
+        if (rt && (Number(rt.updated) || 0) > ((lt && Number(lt.updated)) || 0)) { data.tk = rt; state.tk = rt; saveLocal(); }
+      } catch (e2) { if (e2 && e2.message === "chave") throw e2; }
+      await call({ action: "set", data: data });
       lastError = "";
       setSync("cloud", "Salvo no Google Drive");
     } catch (e) {

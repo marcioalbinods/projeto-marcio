@@ -9,7 +9,8 @@ function normalize(s){
   return {done: obj(s.done), ev,
           goals: Array.isArray(s.goals) ? s.goals.slice(0,300).map(g=>({...g})) : [],
           log: Array.isArray(s.log) ? s.log.slice(0,300).map(l=>({...l})) : [],
-          updated: Number(s.updated)||0};
+          updated: Number(s.updated)||0,
+          tk: (s.tk && typeof s.tk === "object" && !Array.isArray(s.tk)) ? JSON.parse(JSON.stringify(s.tk)) : undefined};
 }
 function saveLocal(){ try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {} }
 function touch(){
