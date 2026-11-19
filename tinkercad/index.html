@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tinkercad: zero ao expert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: oficina amigável e precisa, como um bom professor maker; encorajador, sem enfeite.
+   IDEA: a página se comporta como o plano de trabalho do Tinkercad: cada módulo é uma peça sobre a grade.
+   PICTURE: plano de trabalho isométrico com 10 primitivas; cada uma começa como "furo" fantasma e vai ficando sólida conforme você conclui as aulas.
+   COLOUR and TYPE: azul de plano de trabalho dominante, branco, primitivas coloridas como acento; Rubik nos títulos, Nunito Sans no texto.
+   LAYOUT: faixa azul com título, progresso e a grade; abaixo, chips de módulos, lista de aulas e a aula aberta; por fim ferramentas e atalhos. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0c1524);--ink:light-dark(#13203a,#e4ebf6);--mute:light-dark(#5a6780,#9aa8bf);
+--line:light-dark(#dbe5f2,#22324d);--soft:light-dark(#f2f7fd,#121e33);
+--blue:light-dark(#1565c0,#5aa2f0);--hero:light-dark(#1565c0,#0b2b55);--heroInk:#ffffff;
+--plane:light-dark(#d6e8fa,#163e70);--grid:light-dark(#9fc6ee,#2c5f99);--ok:light-dark(#1f8a3d,#5fd17f);--yellow:#f6c20f}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.6 "Nunito Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Rubik,system-ui,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5vw,50px);font-weight:700}h2{font-size:clamp(24px,3vw,32px)}h3{font-size:19px;font-weight:500}
+a{color:var(--blue)}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.hero{background:var(--hero);color:var(--heroInk)}
+.hero .top{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between}
+.hero p{margin:10px 0 0;max-width:60ch;opacity:.92}
+.stat{text-align:right}.stat b{font:700 clamp(40px,6vw,64px)/1 Rubik,sans-serif;display:block}
+.stat span{opacity:.9}
+.bar{height:10px;border-radius:6px;background:rgba(255,255,255,.22);margin-top:10px;overflow:hidden;min-width:220px}
+.bar i{display:block;height:100%;background:var(--yellow);width:0;transition:width .6s}
+.planeWrap{margin-top:18px;position:relative}
+#plane{width:100%;height:auto;display:block;max-height:400px}
+#plane g.sh{cursor:pointer}#plane g.sh:hover{filter:brightness(1.08)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;opacity:.92;margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.btn{font:700 16px "Nunito Sans",sans-serif;min-height:44px;padding:0 18px;border-radius:10px;border:2px solid transparent;cursor:pointer;background:var(--blue);color:#fff}
+.btn.y{background:var(--yellow);color:#13203a}.btn.g{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+nav.mods{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto;display:flex;gap:8px;padding:10px max(5vw,16px);scrollbar-width:thin}
+.chip{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:700 15px "Nunito Sans",sans-serif;cursor:pointer}
+.chip[aria-current=true]{background:var(--soft);border-color:var(--blue)}
+.chip small{font-weight:400;color:var(--mute)}
+.dot{width:12px;height:12px;border-radius:3px;flex:none}
+.main{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:36px;max-width:1240px;margin:0 auto}
+aside h2{font-size:22px;margin-bottom:4px}aside p{margin:0 0 12px;color:var(--mute);font-size:15px}
+.ls{list-style:none;margin:0;padding:0}
+.ls button{width:100%;text-align:left;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;min-height:44px;border:0;border-radius:10px;background:none;color:var(--ink);font:16px/1.35 "Nunito Sans",sans-serif;cursor:pointer}
+.ls button:hover{background:var(--soft)}.ls button[aria-current=true]{background:var(--soft);font-weight:700}
+.ck{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:#fff;margin-top:1px}
+.ck.on{background:var(--ok);border-color:var(--ok)}
+article{max-width:780px}
+.kick{color:var(--mute);font-size:15px;margin-bottom:6px}
+.obj{font-size:18px;margin:12px 0 22px}
+.box{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:16px 0;background:var(--bg)}
+.box.soft{background:var(--soft);border-color:transparent}
+.box h3{margin-bottom:8px}
+.box ul,.box ol{margin:0;padding-left:22px}.box li{margin:5px 0}
+.q{margin:12px 0 18px}.q p{margin:0 0 8px;font-weight:700}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;min-height:44px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:16px/1.35 "Nunito Sans",sans-serif;cursor:pointer}
+.opts button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--bg))}
+.opts button.wrong{border-color:#d9452b;background:color-mix(in srgb,#d9452b 12%,var(--bg))}
+.fb{margin-top:8px;font-size:15px}
+textarea,input,select{font:16px/1.5 "Nunito Sans",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+textarea{min-height:96px;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+.note{font-size:14px;color:var(--mute)}
+.tutorOut{white-space:pre-wrap;margin-top:12px}
+.pn{display:flex;justify-content:space-between;gap:10px;margin:26px 0 8px;flex-wrap:wrap}
+.tools{background:var(--soft)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:20px}
+.tgrid .box{margin:0}
+.res{font:700 34px/1.1 Rubik,sans-serif;margin:12px 0 4px;white-space:nowrap}
+label{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+kbd{font:700 13px "Nunito Sans",sans-serif;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;white-space:nowrap;background:var(--bg)}
+footer{padding:24px max(5vw,16px);color:var(--mute);font-size:14px}
+@media(max-width:820px){.main{grid-template-columns:minmax(0,1fr);gap:8px}.stat{text-align:left}}
+@media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--mute)}.stack td:empty{display:none}.two{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<header class="hero band">
+ <div class="wrap">
+  <div class="top">
+   <div>
+    <h1>Tinkercad do zero ao expert</h1>
+    <p>10 módulos e 46 aulas práticas: 3D Design, impressão 3D, corte, Sim Lab, Codeblocks, Circuits e como ensinar tudo isso. Cada peça na grade fica sólida conforme você conclui as aulas do módulo.</p>
+   </div>
+   <div class="stat">
+    <b id="pct">0%</b><span id="cnt">0 de 46 aulas</span>
+    <div class="bar"><i id="barI"></i></div>
+    <div class="row" style="justify-content:flex-end"><button class="btn y" id="cont">Continuar de onde parei</button></div>
+   </div>
+  </div>
+  <div class="planeWrap"><svg id="plane" role="img" aria-label="Plano de trabalho com uma peça por módulo"></svg></div>
+  <div class="legend" id="legend"></div>
+ </div>
+</header>
+
+<nav class="mods" aria-label="Módulos"><div class="scroll" id="chips"></div></nav>
+
+<section class="band"><div class="main">
+ <aside><h2 id="mTitle"></h2><p id="mDesc"></p><ul class="ls" id="lessons"></ul></aside>
+ <article id="lesson"></article>
+</div></section>
+
+<section class="band tools" id="ferramentas"><div class="wrap">
+ <h2>Ferramentas de bancada</h2>
+ <p class="note" style="margin-top:8px">Use durante as aulas. Os valores de folga são pontos de partida para FDM com bico 0,4 mm: confirme sempre com um teste de tolerância na sua impressora.</p>
+ <div class="tgrid">
+  <div class="box">
+   <h3>Resistor para LED</h3>
+   <div class="two">
+    <div><label for="vs">Tensão da fonte (V)</label><input id="vs" type="number" step="0.1" value="5"></div>
+    <div><label for="vf">Tensão do LED (V)</label><input id="vf" type="number" step="0.1" value="2"></div>
+   </div>
+   <label for="ia">Corrente desejada (mA)</label><input id="ia" type="number" step="1" value="15">
+   <div class="res" id="rOut">–</div><div class="note" id="rNote"></div>
+  </div>
+  <div class="box">
+   <h3>Folga de encaixe</h3>
+   <label for="pd">Medida da peça que entra (mm)</label><input id="pd" type="number" step="0.1" value="5">
+   <label for="ft">Tipo de encaixe</label>
+   <select id="ft"><option value="0.1">Pressão: fica preso (+0,1)</option><option value="0.2" selected>Justo: entra com força leve (+0,2)</option><option value="0.3">Deslizante: gira ou desliza (+0,3)</option><option value="0.5">Folgado (+0,5)</option></select>
+   <div class="res" id="fOut">–</div><div class="note">Medida do furo ou do encaixe fêmea.</div>
+  </div>
+  <div class="box">
+   <h3>Padrão circular</h3>
+   <label for="nn">Quantos itens em volta?</label><input id="nn" type="number" min="2" step="1" value="12">
+   <div class="res" id="aOut">–</div><div class="note">Ângulo para usar com Ctrl/Cmd+D (duplicar e repetir) ou num laço do Codeblocks.</div>
+  </div>
+ </div>
+
+ <h2 style="margin-top:40px">Atalhos do 3D Design</h2>
+ <p class="note" style="margin-top:8px">No Mac, Ctrl = Cmd e Alt = Option. Lista completa no <a href="https://blog.tinkercad.com/keyboard-shortcuts-for-the-3d-editor">blog oficial de atalhos</a>.</p>
+ <table class="stack" style="margin-top:12px"><thead><tr><th>Tecla</th><th>O que faz</th><th>Aula</th></tr></thead><tbody id="keys"></tbody></table>
+
+ <h2 style="margin-top:40px">Backup do progresso</h2>
+ <p class="note" id="store" style="margin-top:8px">Carregando…</p>
+ <div class="row"><button class="btn g" id="bkCopy">Copiar backup</button><span class="note" id="bkMsg"></span></div>
+ <label for="bkIn">Colar backup para restaurar</label><textarea id="bkIn" placeholder='{"done":{...}}'></textarea>
+ <div class="row"><button class="btn g" id="bkLoad">Restaurar</button></div>
+</div></section>
+
+<footer><a href="../">← Voltar ao Projeto Perfeição</a><br><br>Material de estudo independente, não oficial da Autodesk. Fontes oficiais: <a href="https://www.tinkercad.com/learn">Tinkercad Learn</a> · <a href="https://www.tinkercad.com/blog">blog do Tinkercad</a> (novidades) · <a href="https://docs.arduino.cc/language-reference/">referência da linguagem Arduino</a>. O Tinkercad muda com frequência: se um botão não estiver onde a aula diz, procure a novidade no blog. Isso também faz parte de ser expert.</footer>
+
+<script>
+{
+const M=[
+{id:'a',t:'Começo',cor:'#e5482f',f:'box',h:1.6,d:'Conta, painel e o ambiente 3D. A base de tudo.',L:[
+{t:'Conta, painel e os ambientes',o:'Criar sua conta, entender o painel e saber o que cada ambiente do Tinkercad faz.',c:['O Tinkercad é gratuito e roda no navegador, inclusive no MacBook e no tablet.','Ambientes: 3D Design (modelagem), Circuits (eletrônica simulada) e Codeblocks (modelagem com blocos). O Sim Lab (física) fica dentro do 3D Design.','O painel organiza seus designs em projetos (pastas). O trabalho é salvo automaticamente.'],p:['Entre em tinkercad.com e crie (ou acesse) sua conta.','Crie um projeto chamado “Trilha Tinkercad”.','Crie um 3D Design, troque o nome aleatório por “A1 primeiro contato” e mova-o para o projeto.'],d:'Ache na galeria da comunidade um design que você admira, copie-o para a sua conta e descubra como ele foi construído.',q:[['Como o Tinkercad guarda seu trabalho enquanto você modela?',['Salva automaticamente','Só quando você exporta um STL','Só quando aperta Ctrl+S'],0,'O salvamento é automático; exportar é outra coisa, serve para levar o modelo para fora.']],e:'Cole o link do design A1 ou descreva como organizou seus projetos.'},
+{t:'A interface do 3D Design',o:'Saber onde fica cada ferramenta antes de começar a construir.',c:['Plano de trabalho: o “chão” azul quadriculado onde tudo nasce.','Painel de formas à direita, com bibliotecas além das formas básicas.','Barra superior: copiar, colar, duplicar, excluir, desfazer e as ferramentas de agrupar, alinhar e espelhar.','Controles de vista à esquerda (ViewCube, início, enquadrar, zoom e perspectiva/ortográfica).','Inspetor de forma: aparece ao selecionar algo. Grade e snap ficam no canto inferior direito.'],p:['Arraste 5 formas básicas diferentes para o plano.','Selecione cada uma e veja como o Inspetor muda.','Passe o mouse sobre cada botão da barra superior e anote o nome.'],d:'Alterne entre vista em perspectiva e ortográfica. Em que situação a ortográfica ajuda mais?',e:'Print com as 5 formas e sua resposta sobre a vista ortográfica.'},
+{t:'Navegação 3D sem sofrimento',o:'Mover a câmera com rapidez, para modelar sem perder tempo.',c:['Orbitar: botão direito arrastando (ou Ctrl/Cmd + botão esquerdo).','Deslocar (pan): botão do meio ou Shift + botão direito.','Zoom: rolagem ou as teclas + e −.','F enquadra o que está selecionado; o botão de início volta à vista padrão.','Clicar numa face do ViewCube leva direto àquela vista.'],p:['Faça uma volta completa ao redor de uma forma.','Enquadre uma forma pequena com F.','Veja a peça exatamente de cima, de frente e de lado pelo ViewCube.'],d:'No trackpad do MacBook, descubra e anote a combinação de gestos que funciona melhor para orbitar e deslocar.',q:[['Qual tecla enquadra a vista no objeto selecionado?',['D','F','W'],1,'F = fit (enquadrar). D solta o objeto no plano; W cria um plano de trabalho.']],e:'Sua tabela pessoal de gestos e teclas de navegação.'}]},
+{id:'b',t:'Fundamentos 3D',cor:'#f28c28',f:'cyl',h:2,d:'Formas, medidas exatas, altura, rotação e grade. Precisão antes de criatividade.',L:[
+{t:'Formas e o Inspetor',o:'Controlar cada forma pelos parâmetros, não “no olho”.',c:['Cada forma tem parâmetros próprios no Inspetor: cor, sólido/furo e itens como lados, raio, bisel e segmentos.','Mais lados deixam a curva mais lisa, mas a malha fica mais pesada.','As bibliotecas trazem formas prontas além das básicas.'],p:['Crie 3 cilindros iguais com 8, 24 e 64 lados.','Compare de perto e anote a diferença visual.','Explore todos os parâmetros da caixa e da esfera.'],d:'Faça uma caixa com cantos arredondados usando só parâmetros do Inspetor.',q:[['O que acontece ao aumentar o número de lados de um cilindro?',['A curva fica mais lisa e a malha mais pesada','O cilindro fica mais alto','Ele vira furo'],0,'Mais lados = mais polígonos: mais suave e mais pesado para o computador e o fatiador.']],e:'Print da comparação dos cilindros e da caixa arredondada.'},
+{t:'Dimensões exatas',o:'Dimensionar peças com números digitados.',c:['Alças brancas nos cantos e nas laterais escalam a forma.','Clique no número que aparece na alça e digite o valor em mm.','Shift ao arrastar um canto mantém a proporção.'],p:['Faça uma caixa de 40 × 25 × 12 mm digitando as três medidas.','Faça um cilindro de 10 mm de diâmetro e 30 mm de altura.','Redimensione proporcionalmente uma esfera para 18 mm.'],d:'Caixa de 40 × 40 × 10 mm com um furo de 10 mm exatamente no centro, sem calcular posições.',q:[['Para escalar mantendo a proporção ao arrastar um canto, você segura…',['Alt','Shift','Ctrl'],1,'Shift mantém a proporção. Alt muda o comportamento da escala; teste para ver a diferença.']],e:'Link ou print das três peças e do desafio.'},
+{t:'Altura, eixo Z e a tecla D',o:'Empilhar e posicionar peças em altura com precisão.',c:['A alça preta no topo muda a altura.','O cone preto acima da peça levanta ou abaixa (eixo Z), e você pode digitar a elevação.','D solta a peça direto no plano de trabalho.','Setas movem em X/Y, Ctrl/Cmd + setas movem em Z e Shift multiplica o passo por 10.'],p:['Empilhe 3 caixas de 10 mm sem sobreposição, digitando a elevação.','Levante uma esfera, depois use D para soltá-la.','Mova uma peça 25 mm só com o teclado.'],d:'Escada de 5 degraus de 5 mm de altura e 8 mm de profundidade, toda feita com valores digitados.',q:[['O que a tecla D faz?',['Duplica','Solta a peça no plano de trabalho','Deleta'],1,'D = drop. Duplicar é Ctrl/Cmd+D.']],e:'Print da escada vista de lado (vista ortográfica).'},
+{t:'Rotação controlada',o:'Girar peças em qualquer eixo com o ângulo certo.',c:['As setas curvas giram em cada eixo.','Shift ao girar trava em passos de 45°.','Você pode digitar o ângulo; o passo também muda conforme a distância do cursor ao centro.'],p:['Gire uma caixa 30° em Z digitando o valor.','Deite um cilindro girando 90° em X.','Descubra como o passo da rotação muda ao afastar o cursor.'],d:'Monte um ventilador de 6 pás, cada uma girada 60° em relação à anterior.',e:'Print do ventilador e uma frase sobre o que descobriu do passo de rotação.'},
+{t:'Grade, snap e unidades',o:'Configurar o ambiente para trabalho de precisão.',c:['Snap Grid define o passo do movimento (1 mm, 0,5, 0,1 ou desligado).','Editar grade muda o tamanho do plano e a unidade.','Para impressão 3D, trabalhe sempre em milímetros.'],p:['Mude o snap para 0,1 mm e posicione uma peça em X = 12,3.','Volte para 1 mm e sinta a diferença.','Abra Editar grade e confira a unidade.'],d:'Monte um “pente”: 15 dentes de 1,2 mm com 0,8 mm de espaço entre eles.',q:[['Qual unidade usar ao modelar para impressão 3D?',['Polegadas','Milímetros','Tanto faz'],1,'Fatiadores e impressoras trabalham em mm; misturar unidades gera peças 25,4× maiores ou menores.']],e:'Print do pente com a régua mostrando as medidas.'}]},
+{id:'c',t:'Construção',cor:'#f6c20f',f:'box',h:2.6,d:'Sólido e furo, grupos, alinhar, espelhar, repetir, régua e planos de trabalho.',L:[
+{t:'Sólido e furo',o:'Dominar a lógica de somar e subtrair volumes, o coração do Tinkercad.',c:['Um furo só corta depois de agrupado com o sólido.','O furo aparece translúcido e listrado.','Qualquer forma pode virar furo (H) ou sólido (S).'],p:['Chaveiro: caixa arredondada + furo cilíndrico de 5 mm + seu nome em relevo.','Agrupe e veja o furo cortar.','Desagrupe e mude o tamanho do furo.'],d:'Copo: cilindro sólido + cilindro furo menor, elevado 2 mm para formar o fundo.',q:[['Quando um furo realmente remove material?',['Assim que é colocado','Quando é agrupado com o sólido','Só na exportação'],1,'Antes de agrupar, o furo é só uma forma “marcada”.']],e:'Link do chaveiro e do copo.'},
+{t:'Agrupar e os tipos de grupo',o:'Usar grupos para construir e saber qual tipo de grupo escolher.',c:['Ctrl/Cmd+G agrupa e Ctrl/Cmd+Shift+G desagrupa.','O grupo pode ficar de uma cor só ou multicolorido.','Versões recentes trazem tipos de grupo (união, bundle e interseção). A interseção guarda só o volume em comum.'],p:['Sobreponha duas esferas.','Agrupe testando cada tipo de grupo disponível.','Anote em uma frase o que cada tipo faz.'],d:'Faça uma lente (formato de olho) só com a interseção de duas esferas.',e:'Sua tabela: tipo de grupo, o que faz e quando usar.'},
+{t:'Alinhar (L)',o:'Centralizar e encostar peças sem medir.',c:['L abre a ferramenta Alinhar com pontos nos 3 eixos: mínimo, centro e máximo.','Dá para fixar um objeto como referência para que os outros se alinhem a ele.'],p:['Centralize 3 formas diferentes entre si em X e Y.','Encoste a lateral de uma caixa na lateral de outra.','Descubra como fixar uma peça como referência.'],d:'Refaça o desafio do furo central da aula B2 em menos de 20 segundos.',e:'Explique, com suas palavras, como escolher a peça de referência.'},
+{t:'Espelhar (M)',o:'Criar simetria e peças espelhadas.',c:['M mostra setas de espelhamento em cada eixo.','Estratégia: modele metade, duplique e espelhe.'],p:['Faça meia asa de avião e espelhe uma cópia.','Espelhe um texto e veja o efeito.'],d:'Par de suportes esquerdo e direito para uma prateleira, a partir de um único modelo.',e:'Print do par de suportes.'},
+{t:'Duplicar e repetir (Ctrl/Cmd+D)',o:'Criar padrões com precisão e velocidade.',c:['Ctrl/Cmd+D duplica no lugar.','Se você mover ou girar a cópia e apertar Ctrl/Cmd+D de novo, o Tinkercad repete a mesma transformação.','Alt/Option + arrastar também duplica.'],p:['10 furos em linha com passo de 8 mm.','12 cilindros em círculo (use a calculadora de padrão circular).','Teste o que acontece ao repetir uma escala.'],d:'Engrenagem simples: um disco com 24 dentes, cada um girado 15°.',q:[['Você duplicou, moveu a cópia 8 mm e apertou Ctrl/Cmd+D de novo. O que acontece?',['Nova cópia no mesmo lugar da primeira','Nova cópia 8 mm adiante','Nada'],1,'O duplicar e repetir lembra a última transformação.']],e:'Link da engrenagem.'},
+{t:'Régua (R)',o:'Medir e posicionar em relação a qualquer ponto.',c:['R coloca a régua num ponto do plano.','Com a régua ativa, a peça selecionada mostra distâncias até a régua, e dá para digitar.','Explore onde fica a origem da régua (canto ou centro).'],p:['Posicione um furo a 7,5 mm de duas bordas de uma placa.','Meça a distância entre duas peças.'],d:'Placa 60 × 40 com 4 furos de fixação a 5 mm de cada canto, só com a régua.',e:'Print com a régua mostrando as cotas.'},
+{t:'Plano de trabalho auxiliar (W)',o:'Construir sobre faces inclinadas ou laterais.',c:['W e um clique numa face criam um plano novo sobre ela.','Formas novas nascem alinhadas a esse plano.','W e um clique no vazio voltam ao plano padrão.'],p:['Coloque um botão cilíndrico na face inclinada de uma cunha.','Volte ao plano padrão.'],d:'Gravar um texto na lateral inclinada de um suporte de celular.',e:'Print do texto na face inclinada.'},
+{t:'Organizar a cena',o:'Trabalhar em projetos grandes sem bagunça.',c:['Ctrl/Cmd+Shift+H oculta e Ctrl/Cmd+Shift+L trava.','A tecla V mostra fantasmas dos objetos ocultos: clique num para reexibi-lo.','Ctrl/Cmd+C e V copiam peças entre designs diferentes.','Construa em partes e só agrupe no final.'],p:['Monte uma cena com 20 peças.','Trave a base e oculte metade das peças.','Copie uma peça para outro design.'],d:'Monte uma “biblioteca pessoal”: um design só com peças-modelo que você copia sempre (furos M3, encaixes, letras).',e:'Link da sua biblioteca pessoal.'}]},
+{id:'d',t:'Modelagem avançada',cor:'#3fae49',f:'cone',h:2.8,d:'Texto, importação, Sketch, revolução, novidades e estratégia de expert.',L:[
+{t:'Texto que funciona',o:'Usar texto legível na tela e na peça impressa.',c:['A forma Texto tem fonte, tamanho e altura.','Relevo (sólido) ou gravado (furo).','Para impressão, use traços com pelo menos 0,8–1 mm e profundidade de pelo menos 0,6 mm; fontes finas demais falham.'],p:['Placa de porta com seu nome gravado 1 mm.','Teste 3 fontes e veja qual fica mais legível pequena.'],d:'Régua de 10 cm com números em relevo.',e:'Link da placa e da régua.'},
+{t:'Importar SVG e STL',o:'Trazer desenhos e modelos de fora.',c:['Importar aceita SVG (desenho 2D, que vira peça extrudada) e STL/OBJ (malha 3D).','O SVG precisa de caminhos fechados.','Malhas importadas podem ser pesadas; simplifique antes.','Use só arte própria ou de licença livre.'],p:['Desenhe um ícone simples no Inkscape (grátis) ou em outra ferramenta e exporte em SVG.','Importe, ajuste a escala e extrude.'],d:'Carimbo: seu logo espelhado sobre uma base com cabo.',e:'Print do SVG importado e do carimbo.'},
+{t:'Sketch, caneta e revolução',o:'Desenhar perfis próprios em vez de depender só das primitivas.',c:['A ferramenta Caneta abre o espaço de Sketch para desenhar perfis 2D com linhas e curvas.','O perfil pode ser extrudado em peça.','Revolução gira o perfil ao redor de um eixo: vasos, copos e peças torneadas.'],p:['Desenhe o perfil de um vaso e aplique revolução.','Desenhe um gancho e extrude.'],d:'Peão de xadrez feito só com revolução de um perfil.',e:'Link do peão.'},
+{t:'Novidades: aprender sozinho',o:'Criar o hábito de expert: descobrir recursos novos por conta própria.',c:['O Tinkercad recebe recursos com frequência, como curvas suaves (Smooth Curves) e grupos de interseção.','Fonte confiável: o blog oficial do Tinkercad.','Método: ler, testar num design de rascunho, documentar, aplicar num projeto.'],p:['Leia os 3 posts mais recentes do blog do Tinkercad.','Escolha um recurso novo e teste.','Escreva uma mini-explicação como se fosse para um aluno.'],d:'Grave um vídeo curto (até 1 min) ensinando o recurso novo.',e:'Sua mini-explicação ou o link do vídeo.'},
+{t:'Bibliotecas e sua coleção',o:'Reaproveitar peças em vez de redesenhar.',c:['As bibliotecas do painel de formas têm letras, conectores, peças técnicas e muito mais.','Você pode salvar suas próprias peças numa coleção pessoal e reutilizá-las.'],p:['Explore 5 bibliotecas diferentes.','Salve uma peça sua (por exemplo, um encaixe padrão) na sua coleção.','Use-a em outro design.'],d:'Monte um kit com 5 peças padronizadas para suas aulas.',e:'Lista das peças salvas e onde usou.'},
+{t:'Estratégia de modelagem',o:'Pensar como projetista: decompor antes de construir.',c:['Todo objeto pode ser decomposto em primitivas que somam e subtraem.','Geometria de construção: formas auxiliares que servem de guia e depois viram furo ou são apagadas.','Modele a partir de medidas reais (paquímetro ou régua).'],p:['Escolha um objeto da sua mesa e desenhe à mão as primitivas que o formam.','Meça e modele.'],d:'Recrie o objeto com no máximo 30 formas.',e:'Foto do esboço e link do modelo.'},
+{t:'Vistas Bricks e Blocks',o:'Converter modelos em tijolos e blocos, ótimo para aulas.',c:['As vistas transformam o design em tijolos (estilo brinquedo de montar) ou blocos (estilo voxel).','Dá para ajustar a resolução da conversão.'],p:['Converta seu chaveiro e o peão nas duas vistas.','Compare resoluções.'],d:'Planeje uma aula usando a vista de blocos para explicar volume.',e:'Prints das conversões.'}]},
+{id:'e',t:'Impressão 3D',cor:'#1bb3a6',f:'box',h:2.2,d:'Projetar para imprimir de primeira: regras, tolerâncias e fatiador.',L:[
+{t:'Regras de projeto para FDM',o:'Modelar peças que imprimem bem sem retrabalho.',c:['Paredes com pelo menos 1,2 mm (3 linhas de bico 0,4).','Balanços além de ~45° pedem suporte; pontes curtas costumam funcionar.','Base plana e larga na mesa.','Furos verticais saem mais precisos que horizontais.','Detalhes menores que ~0,4 mm somem.'],p:['Avalie 3 modelos seus com essa lista.','Corrija o pior deles.'],d:'Redesenhe uma peça para imprimir sem nenhum suporte (chanfros de 45° em vez de balanços).',q:[['A partir de qual inclinação, em geral, um balanço começa a pedir suporte?',['10°','45°','89°'],1,'Regra prática: até ~45° a camada se apoia na anterior.']],e:'Antes e depois da peça corrigida.'},
+{t:'Encaixes e tolerâncias',o:'Fazer peças que encaixam de primeira.',c:['Medida idêntica não encaixa: o plástico expande e as camadas têm variação.','Folga inicial entre 0,1 e 0,5 mm, conforme o encaixe (veja a calculadora).','Cada impressora e filamento têm a sua folga: imprima um teste de tolerância.'],p:['Modele um teste: placa com furos de 5,1 a 5,5 mm e um pino de 5 mm.','Imprima e anote qual folga deu justo, deslizante e folgado.'],d:'Caixa com tampa de encaixe usando a SUA folga medida.',e:'Foto do teste com os resultados anotados.'},
+{t:'Exportar e fatiar no Bambu Studio',o:'Levar o modelo do Tinkercad até a impressora.',c:['Exportar gera STL ou OBJ; dá para exportar só o que estiver selecionado.','No fatiador, escolha a orientação pensando em suporte, resistência e acabamento.','Multicor: exporte cada cor em um arquivo separado e carregue juntos no Bambu Studio como partes de um mesmo objeto (com AMS).'],p:['Exporte o chaveiro em STL.','Fatie, observe tempo, filamento e suportes.','Mude a orientação e compare.'],d:'Chaveiro em duas cores.',q:[['Formato mais comum para enviar um modelo ao fatiador:',['SVG','STL','PNG'],1,'STL (ou OBJ/3MF) leva a malha 3D; SVG é 2D.']],e:'Foto da peça impressa e print do fatiamento.'},
+{t:'Projeto: peça funcional',o:'Resolver um problema real com uma peça projetada por você.',c:['Comece pela medição.','Inclua pelo menos um encaixe com folga e um texto.','Itere: versão 1, teste, versão 2.'],p:['Escolha um problema da sua mesa ou da sala de aula.','Modele, imprima, teste e melhore.'],d:'Faça a versão 3 com menos material e o mesmo resultado.',e:'Fotos das versões e o que mudou em cada uma.'}]},
+{id:'f',t:'Corte e 2D',cor:'#2f80ed',f:'box',h:0.6,d:'Usar o Tinkercad para máquina de corte, adesivos e estênceis.',L:[
+{t:'Exportar SVG para corte',o:'Transformar designs em contornos 2D para máquina de corte.',c:['Exportar em SVG gera um contorno 2D do design, útil para vinil, papel e corte a laser.','Confira o arquivo antes de cortar: veja o que foi realmente exportado.','Peças planas encaixáveis (macho e fêmea) viram objetos montáveis.'],p:['Crie um estêncil com seu nome (letras com “pontes” para não soltarem).','Exporte em SVG e abra no software da sua máquina de corte.','Corte em papel.'],d:'Caixinha desmontável de papelão feita de peças planas encaixáveis.',e:'Foto do estêncil cortado.'}]},
+{id:'g',t:'Sim Lab',cor:'#8e5bd1',f:'cyl',h:1.8,d:'Física: gravidade, materiais, conectores e motores.',L:[
+{t:'Sim Lab: primeiros passos',o:'Testar designs com gravidade e colisões.',c:['O Sim Lab abre pelo ícone da maçã.','Objetos podem ser dinâmicos (sofrem gravidade) ou estáticos (ficam parados).','Materiais (plástico, borracha, aço, concreto…) mudam massa e atrito.','Durante a simulação, clicar lança objetos na cena.'],p:['Monte um dominó com 10 peças.','Derrube a primeira e observe.','Troque o material e compare.'],d:'Rampa com 3 materiais diferentes: qual chega mais longe?',q:[['Um objeto estático no Sim Lab…',['Cai com a gravidade','Não se move com gravidade nem colisões','Fica invisível'],1,'Estático serve de chão, parede ou suporte.']],e:'Vídeo ou print da simulação e sua conclusão.'},
+{t:'Conectores, motores e experimentos',o:'Criar mecanismos e fazer experimentos de verdade.',c:['Conectores de eixo, deslizante e junta ligam peças com movimento.','Motores aplicam torque e rpm num eixo.','Dá para rastrear trajetórias e comparar resultados.','Método: mude uma variável por vez.'],p:['Alvo giratório com conector de eixo.','Adicione um motor e varie a rpm.'],d:'Catapulta ou carrinho motorizado; registre 3 testes mudando só uma variável.',e:'Tabela dos 3 testes e o que concluiu.'}]},
+{id:'h',t:'Codeblocks',cor:'#e04f8a',f:'box',h:2,d:'Modelar com programação em blocos. Lógica que prepara para o Python.',L:[
+{t:'Interface do Codeblocks',o:'Entender como um programa vira peça 3D.',c:['Os blocos se dividem em formas, transformações (mover, girar, escalar), controle, matemática e dados (variáveis).','Ao executar, o programa constrói a peça passo a passo; dá para mudar a velocidade.','Os exemplos da galeria são o melhor ponto de partida.'],p:['Abra um exemplo e execute devagar.','Mude um número e rode de novo.','Explique o que cada bloco faz.'],d:'Altere um exemplo até ele ficar irreconhecível.',e:'Print do código e da peça.'},
+{t:'Transformações e grupos com código',o:'Construir peças combinando formas por código.',c:['Criar forma → transformar → agrupar.','Furo também é um parâmetro da forma no código.','Ordem importa: girar e depois mover dá resultado diferente de mover e depois girar.'],p:['Refaça o chaveiro só com blocos.','Teste trocar a ordem de girar e mover.'],d:'Copo com alça feito só com blocos.',e:'Print do código do chaveiro.'},
+{t:'Repetição e variáveis',o:'Usar laços e variáveis para criar padrões.',c:['Repetir executa um trecho n vezes; contar faz uma variável mudar a cada volta.','Padrão circular: ângulo = 360 / n.','Variáveis tornam o modelo paramétrico: mude um número e tudo se ajusta.'],p:['Anel com n furos, com n numa variável.','Troque n de 6 para 20.'],d:'Escada em espiral com 24 degraus.',q:[['Para distribuir 8 itens em círculo, cada um gira…',['8°','45°','80°'],1,'360 / 8 = 45.']],e:'Print com n = 6 e n = 20.'},
+{t:'Padrões avançados e exportação',o:'Gerar peças impossíveis de fazer à mão.',c:['Laço dentro de laço cria grades.','Funções matemáticas (seno) criam ondas.','Descubra as opções de exportação para levar o resultado ao 3D Design ou à impressora.'],p:['Grade 5 × 5 de pinos.','Faça as alturas variarem em onda.'],d:'Luminária paramétrica: padrão de furos gerado por código, impresso.',e:'Link e foto.'}]},
+{id:'i',t:'Circuits',cor:'#4fb3e8',f:'cyl',h:2.6,d:'Eletrônica simulada, Arduino, micro:bit e o encontro com o 3D.',L:[
+{t:'Interface e protoboard',o:'Montar o primeiro circuito simulado.',c:['Painel de componentes: básicos, todos e Starters (projetos prontos de Arduino e micro:bit).','Protoboard: cada fileira curta de 5 furos é conectada; as laterais são barramentos de alimentação.','Convenção de fios: vermelho para positivo e preto para GND.','Iniciar simulação liga o circuito.'],p:['LED + resistor + bateria, sem Arduino.','Inverta o LED e veja o que acontece.'],d:'Dois LEDs em série e dois em paralelo: compare o brilho.',q:[['Para que servem as fileiras longas nas laterais da protoboard?',['Distribuir alimentação (+ e GND)','Prender o Arduino','Nada, são enfeite'],0,'São barramentos de alimentação.']],e:'Link do circuito e sua conclusão série × paralelo.'},
+{t:'Lei de Ohm e multímetro',o:'Medir e calcular, em vez de chutar.',c:['V = R × I.','O LED precisa de resistor limitador (use a calculadora).','Multímetro: tensão em paralelo; corrente em série.','LED tem polaridade: a perna maior (ânodo) vai no positivo.'],p:['Meça tensão e corrente com 3 resistores diferentes.','Compare com o cálculo.'],d:'Divisor de tensão que gere 2,5 V a partir de 5 V; confirme com o multímetro.',q:[['Para medir corrente, o multímetro vai…',['Em paralelo','Em série','Fora do circuito'],1,'A corrente precisa passar por dentro do medidor.']],e:'Tabela medido × calculado.'},
+{t:'Arduino com blocos',o:'Programar o primeiro Arduino.',c:['Arduino Uno: pinos digitais 0–13 e analógicos A0–A5.','Código → Blocos; o “esperar” é o delay.','Comece pelos Starters de Arduino.'],p:['Pisca-pisca no pino 13.','Semáforo com 3 LEDs.'],d:'Semáforo com botão de pedestre.',e:'Link do semáforo.'},
+{t:'Blocos + Texto: chegando ao C++',o:'Ler e escrever o código C++ do Arduino.',c:['Blocos + Texto mostra o C++ gerado.','Estrutura: setup() roda uma vez e loop() roda para sempre.','pinMode, digitalWrite e delay são a base.','Atenção: indo para “só Texto”, não dá para voltar aos blocos.','O mesmo código roda num Arduino real pela Arduino IDE.'],p:['Abra o semáforo em Blocos + Texto e comente cada linha.','Reescreva do zero em Texto.'],d:'Acrescente uma função própria ao código.',q:[['Depois de passar o código para “só Texto”, você consegue voltar aos blocos?',['Sim, sempre','Não','Só no micro:bit'],1,'Blocos viram texto facilmente; o contrário não.']],e:'Seu código comentado.'},
+{t:'Monitor serial e depuração',o:'Enxergar o que o código está fazendo.',c:['Serial.begin(9600) e Serial.println() mandam dados para o monitor serial, no rodapé do painel de código.','Se só houver números, o monitor também mostra um gráfico.','Imprimir valores é a forma mais simples de depurar.'],p:['Potenciômetro no A0, valor no monitor.','Veja o gráfico.'],d:'Imprimir “ALERTA” quando o valor passar de 800 e acender um LED.',e:'Print do gráfico.'},
+{t:'Sensores e atuadores',o:'Fazer o circuito perceber e agir.',c:['Entradas: botão, potenciômetro, LDR, sensor de temperatura e sensor ultrassônico.','Saídas: servo, buzzer piezo, LCD 16×2 e motor DC (este precisa de transistor ou driver).','PWM (analogWrite) só nos pinos marcados com ~.'],p:['Sensor de estacionamento: ultrassônico + buzzer.','Servo controlado por potenciômetro.'],d:'Termômetro com LCD.',e:'Links dos projetos.'},
+{t:'micro:bit no Circuits',o:'Usar o micro:bit simulado, ponte direta com suas aulas.',c:['Há Starters de micro:bit.','O código pode ser visto em blocos e em texto lado a lado.','Os sensores embutidos (acelerômetro, temperatura, luz e bússola) podem ser simulados.'],p:['Dado eletrônico que sorteia ao “chacoalhar”.','Termômetro na matriz de LEDs.'],d:'micro:bit + LEDs externos na protoboard.',e:'Link do dado.'},
+{t:'Projeto integrado: circuito + case',o:'Juntar eletrônica e 3D num produto.',c:['Projete a caixa a partir das medidas reais dos componentes (Arduino Uno: 68,6 × 53,4 mm).','Use peças de circuito no 3D Design para conferir encaixes.','Lembre dos furos para LED de 5 mm, cabo USB e ventilação.'],p:['Escolha o semáforo ou o sensor de estacionamento.','Modele a case com tampa e imprima.'],d:'Monte o circuito real dentro da case.',e:'Fotos do produto montado.'}]},
+{id:'j',t:'Professor e expert',cor:'#5b6b84',f:'cone',h:3,d:'Ensinar, avaliar, conhecer os limites e provar domínio.',L:[
+{t:'Tinkercad Classrooms',o:'Usar o Tinkercad com turmas.',c:['O professor cria turmas e os alunos entram com código da turma.','Você acompanha os designs dos alunos.','O Learning Center tem lições prontas para adaptar.'],p:['Crie uma turma de teste.','Entre como aluno numa segunda conta ou janela anônima.','Crie uma atividade.'],d:'Adapte uma lição oficial para a realidade da sua escola.',e:'Print da turma e da atividade.'},
+{t:'Planejar e avaliar aulas',o:'Transformar seu domínio em boas aulas.',c:['Sequência: demonstração → prática guiada → desafio aberto.','Rubrica: precisão, uso das ferramentas, criatividade e imprimibilidade.','Erros comuns dos alunos: furo sem agrupar, peça flutuando (use D) e escala no olho.'],p:['Plano de aula de 50 min sobre sólido e furo.','Rubrica com 4 critérios e 3 níveis.'],d:'Aplique a aula e ajuste o plano com o que aconteceu.',e:'O plano e a rubrica.'},
+{t:'Limites e próxima ferramenta',o:'Saber quando o Tinkercad não é a ferramenta certa.',c:['Limites: filetes e chanfros em arestas quaisquer, histórico paramétrico, montagens com restrições e desenho técnico.','Próximos passos: Fusion (CAD paramétrico), Onshape e Blender (formas orgânicas).','O que você aprendeu (decomposição, tolerância, precisão) transfere para todos.'],p:['Liste 3 projetos seus que bateriam nos limites e por quê.'],d:'Refaça uma peça simples sua no Fusion e compare o processo.',e:'Sua lista e a comparação.'},
+{t:'Projeto final de expert',o:'Provar domínio completo num único produto.',c:['Tem que incluir: peça multi-parte com tolerâncias medidas, eletrônica do Circuits montada de verdade, um elemento cortado a partir de SVG e um elemento do Sim Lab ou do Codeblocks.','Documentação: processo, versões e erros.','Um plano de aula ensinando uma parte do projeto.'],p:['Defina o produto e um cronograma.','Construa em versões.','Documente e apresente.'],d:'Ensine uma turma a construir uma versão simplificada.',e:'Link do portfólio do projeto final.'}]}
+];
+const KEYS=[['Setas','Mover em X/Y','B3'],['Ctrl/Cmd + ↑ ↓','Mover em Z','B3'],['Shift + setas','Mover 10× mais','B3'],['Alt/Option + arrastar','Duplicar','C5'],['Shift + clique','Selecionar várias','A2'],['Shift ao girar','Passos de 45°','B4'],['Ctrl/Cmd + D','Duplicar e repetir','C5'],['Ctrl/Cmd + G','Agrupar','C2'],['Ctrl/Cmd + Shift + G','Desagrupar','C2'],['L','Alinhar','C3'],['M','Espelhar','C4'],['H / S','Virar furo / sólido','C1'],['W','Plano de trabalho','C7'],['R','Régua','C6'],['F','Enquadrar seleção','A3'],['D','Soltar no plano','B3'],['V','Fantasmas dos ocultos','C8'],['Ctrl/Cmd + Shift + H','Ocultar','C8'],['Ctrl/Cmd + Shift + L','Travar','C8'],['Ctrl/Cmd + C / V','Copiar e colar, até entre designs','C8'],['Ctrl/Cmd + Z / Y','Desfazer / refazer','A2']];
+
+const ALL=[];M.forEach(m=>m.L.forEach((l,i)=>{l.id=m.id+(i+1);l.m=m;l.i=i;ALL.push(l)}));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={done:{},ev:{},quiz:{},last:'a1'};
+let cur='a1',db=null,ref=null,saving=false,pending=false,tmr=null;
+
+function lsGet(){try{const v=localStorage.getItem('tk-trilha');return v?JSON.parse(v):null}catch(e){return null}}
+function lsSet(){try{localStorage.setItem('tk-trilha',JSON.stringify(S))}catch(e){}}
+function norm(o){o=o||{};return{done:o.done||{},ev:o.ev||{},quiz:o.quiz||{},last:o.last||'a1'}}
+function save(){lsSet();clearTimeout(tmr);tmr=setTimeout(push,700)}
+async function push(){if(!ref)return;if(saving){pending=true;return}saving=true;try{await ref.set(JSON.parse(JSON.stringify(S)));setStore('Progresso salvo na sua conta: aparece em qualquer dispositivo em que você abrir esta página.')}catch(e){setStore('Não consegui salvar na conta agora; o progresso está guardado neste navegador.')}saving=false;if(pending){pending=false;push()}}
+function setStore(t){$('#store').textContent=t}
+
+function frac(m){return m.L.filter(l=>S.done[l.id]).length/m.L.length}
+
+/* plano isométrico */
+function shade(h,f){const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,p=Math.abs(f);r=Math.round(r+(t-r)*p);g=Math.round(g+(t-g)*p);b=Math.round(b+(t-b)*p);return'rgb('+r+','+g+','+b+')'}
+function drawPlane(){
+ const s=30,W=12,D=6,c=0.866,pad=14,ox=D*c*s+pad,oy=1.3*s+pad;
+ const P=(x,y,z)=>[ox+(x-y)*c*s,oy+(x+y)*0.5*s-z*s];
+ const pt=a=>a.map(p=>p.join(',')).join(' ');
+ let o='<defs><pattern id="hat" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="rgba(255,255,255,.18)"/><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,.55)" stroke-width="2"/></pattern></defs>';
+ o+='<polygon points="'+pt([P(0,0,0),P(W,0,0),P(W,D,0),P(0,D,0)])+'" fill="var(--plane)"/>';
+ for(let i=0;i<=W;i++)o+='<line x1="'+P(i,0,0)[0]+'" y1="'+P(i,0,0)[1]+'" x2="'+P(i,D,0)[0]+'" y2="'+P(i,D,0)[1]+'" stroke="var(--grid)" stroke-width="'+(i%4?0.6:1.2)+'"/>';
+ for(let j=0;j<=D;j++)o+='<line x1="'+P(0,j,0)[0]+'" y1="'+P(0,j,0)[1]+'" x2="'+P(W,j,0)[0]+'" y2="'+P(W,j,0)[1]+'" stroke="var(--grid)" stroke-width="'+(j%4?0.6:1.2)+'"/>';
+ const items=M.map((m,i)=>({m,x:0.9+(i%5)*2.25,y:0.8+Math.floor(i/5)*2.7})).sort((a,b)=>(a.x+a.y)-(b.x+b.y));
+ for(const it of items){
+  const {m,x,y}=it,f=frac(m),H=m.h,w=1.5;
+  let g='<g class="sh" data-m="'+m.id+'"><title>'+esc(m.t)+': '+Math.round(f*100)+'%</title>';
+  const shape=(h,solid)=>{
+   const top=solid?shade(m.cor,.25):'url(#hat)',sx=solid?m.cor:'url(#hat)',sy=solid?shade(m.cor,-.25):'url(#hat)',st=solid?'none':'rgba(255,255,255,.75)';
+   const sa=' stroke="'+st+'" stroke-width="1.2"'+(solid?'':' stroke-dasharray="4 3"');
+   if(m.f==='box'){
+    return '<polygon points="'+pt([P(x+w,y,0),P(x+w,y+w,0),P(x+w,y+w,h),P(x+w,y,h)])+'" fill="'+sx+'"'+sa+'/>'
+    +'<polygon points="'+pt([P(x,y+w,0),P(x+w,y+w,0),P(x+w,y+w,h),P(x,y+w,h)])+'" fill="'+sy+'"'+sa+'/>'
+    +'<polygon points="'+pt([P(x,y,h),P(x+w,y,h),P(x+w,y+w,h),P(x,y+w,h)])+'" fill="'+top+'"'+sa+'/>';
+   }
+   const r=w/2,[cx,cyb]=P(x+r,y+r,0),cyt=cyb-h*s,rx=1.2247*r*s,ry=0.7071*r*s;
+   if(m.f==='cyl'){
+    return '<path d="M'+(cx-rx)+','+cyt+' L'+(cx-rx)+','+cyb+' A'+rx+','+ry+' 0 0 0 '+(cx+rx)+','+cyb+' L'+(cx+rx)+','+cyt+' Z" fill="'+sx+'"'+sa+'/>'
+    +'<ellipse cx="'+cx+'" cy="'+cyt+'" rx="'+rx+'" ry="'+ry+'" fill="'+top+'"'+sa+'/>';
+   }
+   return '<path d="M'+(cx-rx)+','+cyb+' A'+rx+','+ry+' 0 0 0 '+(cx+rx)+','+cyb+' L'+cx+','+cyt+' Z" fill="'+sx+'"'+sa+'/>'
+   +'<path d="M'+cx+','+cyt+' L'+(cx+rx*0.15)+','+cyb+' L'+(cx-rx)+','+cyb+' Z" fill="'+top+'" opacity="'+(solid?.5:0)+'"/>';
+  };
+  if(f<1)g+=shape(H,false);
+  if(f>0)g+=shape(Math.max(H*f,0.15),true);
+  g+='</g>';o+=g;
+ }
+ const vbW=(W+D)*c*s+pad*2,vbH=oy+(W+D)*0.5*s+pad;
+ const sv=$('#plane');sv.setAttribute('viewBox','0 0 '+vbW+' '+vbH);sv.innerHTML=o;
+}
+
+function renderTop(){
+ const n=ALL.filter(l=>S.done[l.id]).length,p=Math.round(n/ALL.length*100);
+ $('#pct').textContent=p+'%';$('#cnt').textContent=n+' de '+ALL.length+' aulas concluídas';$('#barI').style.width=p+'%';
+ drawPlane();
+ $('#legend').innerHTML=M.map(m=>'<span><i style="background:'+m.cor+'"></i>'+esc(m.t)+'</span>').join('');
+ $('#chips').innerHTML=M.map(m=>{const d=m.L.filter(l=>S.done[l.id]).length;return'<button class="chip" data-m="'+m.id+'" aria-current="'+(m.id===cur[0])+'"><span class="dot" style="background:'+m.cor+'"></span>'+esc(m.t)+' <small>'+d+'/'+m.L.length+'</small></button>'}).join('');
+}
+function renderSide(){
+ const L=ALL.find(l=>l.id===cur),m=L.m;
+ $('#mTitle').textContent='Módulo '+m.id.toUpperCase()+' · '+m.t;$('#mDesc').textContent=m.d;
+ $('#lessons').innerHTML=m.L.map(l=>'<li><button data-l="'+l.id+'" aria-current="'+(l.id===cur)+'"><span class="ck'+(S.done[l.id]?' on':'')+'">'+(S.done[l.id]?'✓':'')+'</span><span>'+l.id.toUpperCase()+' · '+esc(l.t)+'</span></button></li>').join('');
+}
+function renderLesson(){
+ const L=ALL.find(l=>l.id===cur),k=ALL.indexOf(L),prev=ALL[k-1],next=ALL[k+1];
+ let h='<div class="kick">Aula '+L.id.toUpperCase()+' · '+esc(L.m.t)+'</div><h2>'+esc(L.t)+'</h2><p class="obj">'+esc(L.o)+'</p>';
+ h+='<div class="box soft"><h3>O que você precisa saber</h3><ul>'+L.c.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+ h+='<div class="box"><h3>Prática no Tinkercad</h3><ol>'+L.p.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></div>';
+ h+='<div class="box"><h3>Desafio</h3><p style="margin:0">'+esc(L.d)+'</p></div>';
+ if(L.q)h+='<div class="box"><h3>Confira se entendeu</h3>'+L.q.map((q,qi)=>{const key=L.id+'-'+qi,a=S.quiz[key];return'<div class="q"><p>'+esc(q[0])+'</p><div class="opts">'+q[1].map((op,oi)=>{let c='';if(a!==undefined){if(oi===q[2])c='right';else if(oi===a)c='wrong'}return'<button data-q="'+key+'" data-o="'+oi+'" class="'+c+'">'+esc(op)+'</button>'}).join('')+'</div>'+(a!==undefined?'<div class="fb">'+(a===q[2]?'Isso. ':'Ainda não. ')+esc(q[3])+'</div>':'')+'</div>'}).join('')+'</div>';
+ h+='<div class="box"><h3>Evidência</h3><label for="ev">'+esc(L.e)+'</label><textarea id="ev"></textarea><div class="row"><span class="note" id="evMsg"></span></div></div>';
+ h+='<div class="box" id="tutor" hidden><h3>Travou? Peça uma dica</h3><p class="note" style="margin:0 0 8px">O tutor dá pistas e faz perguntas; ele não entrega a resposta pronta.</p><label for="tq">Onde você travou e o que já tentou?</label><textarea id="tq"></textarea><div class="row"><button class="btn" id="tb">Pedir uma dica</button></div><div class="tutorOut" id="to"></div></div>';
+ h+='<div class="row"><button class="btn'+(S.done[L.id]?' g':'')+'" id="done">'+(S.done[L.id]?'✓ Concluída (desmarcar)':'Marcar aula como concluída')+'</button></div>';
+ h+='<div class="pn">'+(prev?'<button class="btn g" data-l="'+prev.id+'">← '+prev.id.toUpperCase()+' · '+esc(prev.t)+'</button>':'<span></span>')+(next?'<button class="btn g" data-l="'+next.id+'">'+next.id.toUpperCase()+' · '+esc(next.t)+' →</button>':'')+'</div>';
+ const art=$('#lesson');art.innerHTML=h;
+ const ev=$('#ev');ev.value=S.ev[L.id]||'';
+ ev.addEventListener('input',()=>{S.ev[L.id]=ev.value;save();$('#evMsg').textContent='Salvo'});
+ if(sample)$('#tutor').hidden=false;
+}
+function go(id,scroll){if(!ALL.find(l=>l.id===id))id='a1';cur=id;S.last=id;renderTop();renderSide();renderLesson();if(location.hash!=='#'+id)history.replaceState(null,'','#'+id);if(scroll)$('#lesson').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})}
+
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-l],[data-m],[data-q],#done,#tb');if(!b)return;
+ if(b.dataset.q){S.quiz[b.dataset.q]=+b.dataset.o;save();renderLesson();return}
+ if(b.id==='done'){S.done[cur]=!S.done[cur];if(!S.done[cur])delete S.done[cur];save();renderTop();renderSide();renderLesson();return}
+ if(b.id==='tb'){ask();return}
+ if(b.dataset.l){go(b.dataset.l,true);return}
+ if(b.dataset.m){const m=M.find(x=>x.id===b.dataset.m);const first=m.L.find(l=>!S.done[l.id])||m.L[0];go(first.id,true)}
+});
+$('#cont').addEventListener('click',()=>{const n=ALL.find(l=>!S.done[l.id]);go(n?n.id:S.last,true)});
+addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&id!==cur)go(id,false)});
+
+/* tutor */
+let sample=null,busy=false;
+async function ask(){
+ if(busy||!sample)return;const L=ALL.find(l=>l.id===cur),q=$('#tq').value.trim(),out=$('#to');
+ if(!q){out.textContent='Escreva onde travou primeiro.';return}
+ busy=true;$('#tb').disabled=true;out.textContent='Pensando…';
+ const prompt='Você é um tutor de Tinkercad para um professor de educação digital que quer ficar expert e aprender fazendo sozinho. Regras: dê UMA dica que guie o raciocínio, de preferência com uma pergunta que o faça descobrir o caminho; nunca entregue o passo a passo completo nem a resposta final; se ele pedir a resposta, dê uma dica maior, mas ainda deixe o último passo para ele. Se não tiver certeza de que um botão ou recurso existe na versão atual do Tinkercad, diga isso e sugira onde conferir. Responda em português do Brasil, em até 110 palavras, sem markdown.\n\nAula: '+L.id.toUpperCase()+' '+L.t+'\nObjetivo: '+L.o+'\nPrática: '+L.p.join(' | ')+'\nDesafio: '+L.d+'\n\nDúvida do aluno: '+q;
+ try{await sample(prompt,{cache:false,onText:({text})=>{out.textContent=text}})}
+ catch(e){if(e&&e.code==='not_granted'){$('#tutor').hidden=true;sample=null}else out.textContent=e&&e.code==='rate_limited'?'Muitas perguntas seguidas; tente de novo em alguns minutos.':'Não consegui responder agora. Tente mais tarde.'}
+ busy=false;const tb=$('#tb');if(tb)tb.disabled=false;
+}
+
+/* ferramentas */
+const E12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
+function calcR(){const vs=+$('#vs').value,vf=+$('#vf').value,i=+$('#ia').value/1000;
+ if(!(vs>vf)||!(i>0)){$('#rOut').textContent='–';$('#rNote').textContent='A fonte precisa ter tensão maior que o LED.';return}
+ const r=(vs-vf)/i;let std=null;for(let d=1;d<1e7&&!std;d*=10)for(const v of E12){if(v*d>=r-1e-9){std=v*d;break}}
+ const p=i*i*std*1000;$('#rOut').textContent=std>=1000?(std/1000).toLocaleString('pt-BR')+' kΩ':Math.round(std)+' Ω';
+ $('#rNote').textContent='Cálculo: '+r.toFixed(0)+' Ω → valor comercial acima (E12). Potência ≈ '+p.toFixed(0)+' mW: um resistor de 1/4 W aguenta até 250 mW.'}
+function calcF(){const d=+$('#pd').value,f=+$('#ft').value;$('#fOut').textContent=d>0?(d+f).toLocaleString('pt-BR',{maximumFractionDigits:2})+' mm':'–'}
+function calcA(){const n=Math.round(+$('#nn').value);$('#aOut').textContent=n>=2?(360/n).toLocaleString('pt-BR',{maximumFractionDigits:3})+'°':'–'}
+['vs','vf','ia'].forEach(i=>$('#'+i).addEventListener('input',calcR));$('#pd').addEventListener('input',calcF);$('#ft').addEventListener('change',calcF);$('#nn').addEventListener('input',calcA);
+calcR();calcF();calcA();
+$('#keys').innerHTML=KEYS.map(k=>'<tr><td><kbd>'+esc(k[0])+'</kbd></td><td>'+esc(k[1])+'</td><td><a href="#'+k[2].toLowerCase()+'">'+k[2]+'</a></td></tr>').join('');
+
+/* backup */
+$('#bkCopy').addEventListener('click',async()=>{const t=JSON.stringify(S);try{await navigator.clipboard.writeText(t);$('#bkMsg').textContent='Copiado.'}catch(e){$('#bkIn').value=t;$('#bkMsg').textContent='Não deu para copiar direto: o backup está na caixa abaixo, selecione e copie.'}});
+$('#bkLoad').addEventListener('click',()=>{try{const o=JSON.parse($('#bkIn').value);if(!o||typeof o!=='object'||!o.done)throw 0;S=norm(o);save();go(S.last,false);$('#bkMsg').textContent='Progresso restaurado.'}catch(e){$('#bkMsg').textContent='Esse texto não parece um backup válido.'}});
+
+/* início */
+const ls=lsGet();if(ls)S=norm(ls);
+go(location.hash.slice(1)||S.last,false);
+setStore('Progresso guardado neste navegador. Conectando à sua conta…');
+(async()=>{
+ if(typeof claude==='undefined'||!claude||typeof claude.use!=='function'){setStore('Progresso guardado neste navegador. Para levar para outro dispositivo, use “Copiar backup” e cole lá em “Restaurar”.');return}
+ try{
+  const [d,u,sm]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('sample')]);
+  if(sm){sample=sm;const t=$('#tutor');if(t)t.hidden=false}
+  if(!d||!u){setStore('Progresso guardado só neste navegador. Use o backup para levar para outro dispositivo.');return}
+  const id=await u.id();if(!id){setStore('Progresso guardado só neste navegador.');return}
+  db=d;ref=db.doc('data/users/'+id+'/tinkercad');
+  let to=setTimeout(()=>setStore('A conta está demorando para responder; seu progresso continua salvo neste navegador.'),10000);
+  const r=await ref.get();clearTimeout(to);
+  let v=r&&typeof r.data==='function'?r.data():(r&&r.data&&typeof r.data==='object'&&!r.done?r.data:r);
+  if(v&&v.done){const loc=S;S=norm(v);for(const k in loc.done)S.done[k]=true;for(const k in loc.ev)if(!S.ev[k])S.ev[k]=loc.ev[k];for(const k in loc.quiz)if(S.quiz[k]===undefined)S.quiz[k]=loc.quiz[k];lsSet();go(location.hash.slice(1)||S.last,false)}
+  await push();
+ }catch(e){setStore('Progresso guardado neste navegador (a conta não respondeu).')}
+})();
+}
+</script>
+</body>
+</html>
