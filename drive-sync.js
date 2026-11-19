@@ -42,9 +42,8 @@
       var data = JSON.parse(JSON.stringify(state));
       try {
         var cur = await call({ action: "get" });
-        var rt = cur.data && cur.data.tk, lt = data.tk;
-        if (rt && (Number(rt.updated) || 0) > ((lt && Number(lt.updated)) || 0)) { data.tk = rt; state.tk = rt; saveLocal(); }
-      } catch (e2) { if (e2 && e2.message === "chave") throw e2; }
+        if (cur.data && cur.data.tk) data.tk = cur.data.tk;
+      } catch (e2) { throw e2; }
       await call({ action: "set", data: data });
       lastError = "";
       setSync("cloud", "Salvo no Google Drive");
